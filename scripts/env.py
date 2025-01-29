@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv();
+load_dotenv()
 
 class EnvVariables:
     """
@@ -15,4 +15,4 @@ class EnvVariables:
     ambiente = int(os.environ.get("AMBIENTE"))
     nome = os.environ.get("NOME")
     secret_key = os.environ.get("SECRET_KEY")
-    rota_dev = os.environ.get("ROTA_PROD")
+    rota_prod = os.environ.get("ROTA_PROD")

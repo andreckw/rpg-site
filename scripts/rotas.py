@@ -15,9 +15,10 @@ def index():
 
 @app.route("/personagem", methods=['GET', 'POST'])
 def personagem():
-    form = PersonagemForm();
-
+    form = PersonagemForm()
+    new_personagem = None
+    
     if form.validate_on_submit and request.method == 'POST':
-        criarpersonagem(form)
+        new_personagem = criarpersonagem(form)
 
-    return render_template("/sites/personagem.html", form=form)
+    return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)

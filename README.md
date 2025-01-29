@@ -5,28 +5,34 @@
 Flask - criação do site
 
 # Instalação das Bibliotecas
+## Comandos separadamente
 Se estiver usando VSCode use os comandos no terminal, pois ele não cria e ativa o ambiente virtual automaticamente
 
 ```shell
     py -m venv .venv;.venv/Scripts/activate
 ```
 
-Para instalação do flask use:
+Para criação do site foi usado Flask:
 ```shell
     pip install Flask
 ```
-Para instalação do flask-wth use:
+Para criação dos formularios do flask-wtf:
 ```shell
     pip install -U Flask-WTF
 ```
-
-Para instalação do dotenv use:
+Para utilizar o arquivo .env:
 ```shell
     pip install python-dotenv
+```
+Para gerar nomes:
+```shell
+    pip install faker
 ```
 ## Todos os comandos em uma execução
 ```shell
     pip install Flask;
-    pip install python-dotenv
+    pip install -U Flask-WTF;
+    pip install python-dotenv;
+    pip install faker
 ```
 

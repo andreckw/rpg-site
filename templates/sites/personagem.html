@@ -27,26 +27,30 @@
         <div class="field is-grouped">
             <p class="control is-expanded">
                 {{ form.nome.label(class="label") }}
-                {{ form.nome(class="input") }}
+                {{ form.nome(class="input", value=new_personagem.nome) }}
             </p>
             <p class="control is-expanded">
                 {{ form.raca.label(class="label") }}
                 {{ form.raca(class="input") }}
             </p>
+            <div class="control select">
+                {{ form.genero.label(class="label") }}
+                {{ form.genero() }}
+            </div>
         </div>
 
         <div class="field is-grouped">
             <p class="control is-expanded">
                 {{ form.idade.label(class="label") }}
-                {{ form.idade(class="input") }}
+                {{ form.idade(class="input", value=new_personagem.idade) }}
             </p>
             <p class="control is-expanded">
                 {{ form.peso.label(class="label") }}
-                {{ form.peso(class="input") }}
+                {{ form.peso(class="input", value=new_personagem.peso) }}
             </p>
             <p class="control is-expanded">
                 {{ form.altura.label(class="label") }}
-                {{ form.altura(class="input") }}
+                {{ form.altura(class="input", value=new_personagem.altura) }}
             </p>
         </div>
     </div>
@@ -94,6 +98,35 @@
             </p>
         </div>
     </div>
+
+    <hr>
+
+    <div class="" name="tabs" id="tab_configuracao">
+        <h3 class="title is-3">
+            Configurações
+        </h3>
+        <div class="field is-grouped">
+            <p class="control">
+                {{ form.travar_nome() }}
+                {{ form.travar_nome.label(class="checkbox") }}
+            </p>
+            <p class="control">
+                {{ form.travar_idade() }}
+                {{ form.travar_idade.label(class="checkbox") }}
+            </p>
+            <p class="control">
+                {{ form.travar_peso() }}
+                {{ form.travar_peso.label(class="checkbox") }}
+            </p>
+            <p class="control">
+                {{ form.travar_altura() }}
+                {{ form.travar_altura.label(class="checkbox") }}
+            </p>
+            <p class="control">
+                {{ form.travar_raca() }}
+                {{ form.travar_raca.label(class="checkbox") }}
+            </p>
+        </div>
     </div>
 
     <div class="field is-grouped is-grouped-centered">
@@ -119,8 +152,6 @@
                 docTab[i].setAttribute("class", "");
             }
         }
-
-
     }
 </script>
 {% endblock %}
