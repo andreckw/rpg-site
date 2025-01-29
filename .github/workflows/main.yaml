@@ -45,11 +45,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r dependencias.txt
 
-    - name: Upload Artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        name: web-build-artifact  # the name of the artifact
-        path: build/web
+    - name: Build Web
+      run: |
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
+          flask --app main run --host ${GITHUB_REPOSITORY#*/}
 
   deploy:
     needs: build  # wait for the "build" job to get done before executing this "deploy" job
@@ -76,9 +75,4 @@ jobs:
         uses: actions/deploy-pages@v4.0.5
         with:
           artifact_name: web-build-artifact
-
-      - name: Build Web
-        run: |
-              echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
-              flask --app main run --host ${GITHUB_REPOSITORY#*/}
         
