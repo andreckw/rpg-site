@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="theme-dark">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            RPG Site | {% block titulo %}{% endblock %}
+        </title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    </head>
+
+    <body>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-burger" id="nav_burger" role="button" data-target="nav_menu"
+                    aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="navbar-menu" id="nav_menu">
+                <div class="navbar-start">
+                    <a href="{{ url_for('index') }}" class="navbar-item">
+                        Index
+                    </a>
+                    <a href="{{ url_for('personagem') }}" class="navbar-item">
+                        Criar personagem
+                    </a>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Temas
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" onclick="alterarTema(0)">
+                                Auto
+                            </a>
+                            <a class="navbar-item" onclick="alterarTema(1)">
+                                Dark
+                            </a>
+                            <a class="navbar-item" onclick="alterarTema(2)">
+                                Light
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="block content container">
+            <div class="title is-2">
+                {% block tela %}{% endblock %}
+            </div>
+            
+            <section class="section">
+                {% block conteudo %}{% endblock %}
+            </section>
+        </div>
+
+        <footer class="footer content has-text-centered">
+            <p> Feito por um animal com computador </p>
+        </footer>
+        
+        <script>
+            window.onload = () => {
+                let id_tema = 0;
+                document.cookie.split(";").forEach((el) => {
+                    c = el.split("=");
+
+                    if (c[1].replace(" ", "") == "theme-dark") {
+                        id_tema = 1;
+                    } else if (c[1].replace(" ", "") == "theme-light") {
+                        id_tema = 2;
+                    }
+                });
+
+                alterarTema(id_tema);
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const navBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+                navBurgers.forEach(element => {
+                    element.addEventListener('click', function() {
+                        const target = element.dataset.target;
+                        const el_target = document.getElementById(target);
+
+                        element.classList.toggle('is-active');
+                        el_target.classList.toggle('is-active');
+                    });
+                });
+            });
+
+            function alterarTema(id) {
+                
+                let opcoes = document.querySelectorAll('.navbar-dropdown .navbar-item');
+
+                opcoes.forEach((el) => {
+                    el.setAttribute("class", "navbar-item");
+                });
+
+                if (id == 0) {
+                    document.cookie = "tema=theme-auto"
+                } else if (id == 1) {
+                    document.cookie = "tema=theme-dark"
+                } else if (id == 2) {
+                    document.cookie = "tema=theme-light"
+                }
+
+                const html = document.getElementsByTagName("html")[0];
+
+                let cookies = document.cookie.split(";");
+
+                cookies.forEach((el) => {
+                    c = el.split("=");
+
+                    if (c[0].replace(" ", "") == "tema") {
+                        html.setAttribute("class", c[1]);
+
+                        opcoes[id].setAttribute("class", "navbar-item is-selected");
+                    }
+                });
+            }
+        </script>
+        {% block js %}
+        {% endblock %}
+    </body>
+
+</html>
