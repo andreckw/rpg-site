@@ -42,8 +42,8 @@ jobs:
 
     - name: Install Python Dependencies
       run: |
-        python -m pip install --upgrade pip
-        dependencias.txt
+        python -m pip install --upgrade 
+        pip install dependencias.txt
 
     - name: Flet Build Web
       run: |
