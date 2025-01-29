@@ -45,11 +45,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r dependencias.txt
 
-    - name: Flet Build Web
-      run: |
-            echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
-            flask --app main run --host 0.0.0.0
-
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
       with:
@@ -81,4 +76,9 @@ jobs:
         uses: actions/deploy-pages@v4.0.5
         with:
           artifact_name: web-build-artifact
+
+      - name: Build Web
+      run: |
+            echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
+            python.exe main.py
         
