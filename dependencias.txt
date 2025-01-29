@@ -1,0 +1,4 @@
+pip install Flask;
+pip install -U Flask-WTF;
+pip install python-dotenv;
+pip install faker
