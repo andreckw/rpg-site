@@ -48,7 +48,7 @@ jobs:
     - name: Build Web
       run: |
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
-          flask --app main run --host ${GITHUB_REPOSITORY#*/}
+          python.exe main.py
 
   deploy:
     needs: build  # wait for the "build" job to get done before executing this "deploy" job
