@@ -1,5 +1,0 @@
-Flask
-Flask-WTF
-python-dotenv
-faker
-gevent
