@@ -32,11 +32,13 @@ def criarpersonagem(form: PersonagemForm):
     # Integer/Float == None
     # Str == ""
     nome = form.nome.data
+    raca = form.raca.data
     genero = form.genero.data
     idade = form.idade.data
     peso = form.peso.data
     altura = form.altura.data
     
+
     if nome == "" or form.travar_nome.data == False:
         nome = geracao_nome(genero)
     
@@ -50,9 +52,14 @@ def criarpersonagem(form: PersonagemForm):
     
     if peso == None or form.travar_peso.data == False:
         peso = 21.7 * (float(altura) * float(altura))
-        
+    
+    if raca == "" or form.travar_raca.data == False:
+        raca = geracao_raca(altura)
+
+    
     new_persoangem = Personagem()
     new_persoangem.nome = nome
+    new_persoangem.raca = raca
     new_persoangem.genero = genero
     new_persoangem.idade = idade
     new_persoangem.altura = altura
@@ -82,9 +89,31 @@ def geracao_nome(gender):
         "vo", "vu", "xa", "xe", "xi", "xo", "xu", "za", "ze", "zi", "zo", "zu", "bra", "bre", "bri",
         "bro", "bru", "cra", "cre", "cri", "cro", "cru", "dra", "dre", "dri", "dro", "dru", "fra", 
         "fre", "fri", "fro", "fru", "gra", "gre", "gri", "gro", "gru", "pra", "pre", "pri", "pro", 
-        "pru","tra", "tre", "tri", "tro", "tru"
+        "pru","tra", "tre", "tri", "tro", "tru", "vra", "vre", "vri", "vro", "vru"
     ]
     
     ultimo_nome = "".join(random.choices(silabas, k=qtd_silabas)).title()
     
     return f"{primeiro_nome} {ultimo_nome}"
+
+def geracao_raca(altura):
+    
+    racas_ori = {
+        "Humano": (1.5, 2.0),
+        "Elfo": (1.5, 2.0),
+        "Kemono": (1.5, 2.0),
+        "Anões": (1.2, 1.45),
+        "Fadas": (1.0, 1.3),
+        "Gnomo": (1.0, 1.3),
+        "Anjo": (1.0, 2.0),
+        "Demonio": (1.0, 2.0),
+    }
+    
+    racas = []
+    
+    for k, r in racas_ori.items():
+
+        if altura >= r[0] and altura <= r[1]:
+            racas.append(k)
+    
+    return f"{random.choice(racas)}"

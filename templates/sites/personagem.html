@@ -31,7 +31,7 @@
             </p>
             <p class="control is-expanded">
                 {{ form.raca.label(class="label") }}
-                {{ form.raca(class="input") }}
+                {{ form.raca(class="input", value=new_personagem.raca) }}
             </p>
             <div class="control select">
                 {{ form.genero.label(class="label") }}
@@ -105,24 +105,27 @@
         <h3 class="title is-3">
             Configurações
         </h3>
+
         <div class="field is-grouped">
-            <p class="control">
+            <p class="control is-expanded">
                 {{ form.travar_nome() }}
                 {{ form.travar_nome.label(class="checkbox") }}
             </p>
-            <p class="control">
+            <p class="control is-expanded">
                 {{ form.travar_idade() }}
                 {{ form.travar_idade.label(class="checkbox") }}
             </p>
-            <p class="control">
+            <p class="control is-expanded">
                 {{ form.travar_peso() }}
                 {{ form.travar_peso.label(class="checkbox") }}
             </p>
-            <p class="control">
+        </div>
+        <div class="field is-grouped">
+            <p class="control is-expanded">
                 {{ form.travar_altura() }}
                 {{ form.travar_altura.label(class="checkbox") }}
             </p>
-            <p class="control">
+            <p class="control is-expanded">
                 {{ form.travar_raca() }}
                 {{ form.travar_raca.label(class="checkbox") }}
             </p>
