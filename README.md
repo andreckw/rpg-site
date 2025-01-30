@@ -20,6 +20,10 @@ Para criação dos formularios do flask-wtf:
 ```shell
     pip install -U Flask-WTF
 ```
+Para hospedagem do server:
+```shell
+    pip install gevent
+```
 Para utilizar o arquivo .env:
 ```shell
     pip install python-dotenv
@@ -33,6 +37,7 @@ Para gerar nomes:
     pip install Flask;
     pip install -U Flask-WTF;
     pip install python-dotenv;
-    pip install faker
+    pip install faker;
+    pip install gevent
 ```
 
