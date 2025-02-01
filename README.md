@@ -10,7 +10,7 @@
 
 ## Bibliotecas HTML
 [Bulma](https://bulma.io/documentation/start/overview/) - Estilização CSS da página
-[Fonts Google](https://fonts.google.com/icons?selected=Material+Icons:account_circle:&icon.size=24&icon.color=undefined) - Icones da página
+[Fonts Google](https://fonts.google.com/icons?selected=Material+Icons) - Icones da página
 
 # Instalação das Bibliotecas
 ## Comandos separadamente
