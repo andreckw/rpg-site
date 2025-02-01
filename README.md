@@ -32,12 +32,17 @@ Para gerar nomes:
 ```shell
     pip install faker
 ```
+Para gerar cores:
+```shell
+    pip install webcolors
+```
 ## Todos os comandos em uma execução
 ```shell
     pip install Flask;
     pip install -U Flask-WTF;
     pip install python-dotenv;
     pip install faker;
-    pip install gevent
+    pip install gevent;
+    pip install webcolors
 ```
 
