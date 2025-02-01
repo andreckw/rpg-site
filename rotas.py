@@ -1,11 +1,10 @@
-from flask import *
-from scripts.env import EnvVariables
-from scripts.forms import *
+from flask import Flask, render_template, request
+from scripts.forms import PersonagemForm
 from scripts.personagem import criarpersonagem
 
-app = Flask(EnvVariables.nome);
+app = Flask(__name__)
 
-app.config["SECRET_KEY"] = EnvVariables.secret_key
+app.config["SECRET_KEY"] = "61aecb89-f2b8-46b9-a85a-c05db0dd2e06"
 
 @app.route("/", methods=['GET'])
 def index():
@@ -22,3 +21,6 @@ def personagem():
         new_personagem = criarpersonagem(form)
 
     return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)
+
+if __name__ == "__main__":
+    app.run()
