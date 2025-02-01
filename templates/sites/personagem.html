@@ -7,9 +7,9 @@
 {% block conteudo %}
 <div class="box">
     <p>
-        Esta tela é para criação de personagem gerada aleatoriamente, qualquer campo não preenchido será
-        preenchido automaticamente
+        Esta é uma criação de personagem gerada aleatoriamente, qualquer campo não preenchido ou que não tenha sido travado será preenchido automaticamente.
     </p>
+    <strong>Você pode altera-lo como quiser, o personagem gerado é apenas uma base</strong>
 </div>
 <form class="form" method="POST" action="#">
     <div class="tabs is-centered is-boxed">
@@ -70,6 +70,12 @@
                 {{ form.cabelo_cor(class="input", 
                     value=new_personagem.cabelo_cor) }}
             </p>
+            <p class="control">
+                {{ form.tom_pele.label(class="label") }}
+                <span class="select">
+                    {{ form.tom_pele() }}
+                </span>
+            </p>
         </div>
         <div class="field is-grouped">
             <p class="control">
@@ -93,7 +99,7 @@
             Configurações
         </h3>
 
-        <div class="field is-grouped">
+        <div class="field is-grouped has-text-centered">
             <p class="control is-expanded">
                 {{ form.travar_nome() }}
                 {{ form.travar_nome.label(class="checkbox") }}
@@ -107,7 +113,7 @@
                 {{ form.travar_peso.label(class="checkbox") }}
             </p>
         </div>
-        <div class="field is-grouped">
+        <div class="field is-grouped has-text-centered">
             <p class="control is-expanded">
                 {{ form.travar_altura() }}
                 {{ form.travar_altura.label(class="checkbox") }}
@@ -121,7 +127,7 @@
                 {{ form.travar_tipo_cabelo.label(class="checkbox") }}
             </p>
         </div>
-        <div class="field is-grouped">
+        <div class="field is-grouped has-text-centered">
             <p class="control is-expanded">
                 {{ form.travar_cor_cabelo() }}
                 {{ form.travar_cor_cabelo.label(class="checkbox") }}
@@ -135,10 +141,14 @@
                 {{ form.travar_cor_olhos.label(class="checkbox") }}
             </p>
         </div>
-        <div class="field is-grouped">
+        <div class="field is-grouped has-text-centered">
             <p class="control is-expanded">
                 {{ form.travar_genero() }}
                 {{ form.travar_genero.label(class="checkbox") }}
+            </p>
+            <p class="control is-expanded">
+                {{ form.travar_tom_pele() }}
+                {{ form.travar_tom_pele.label(class="checkbox") }}
             </p>
         </div>
     </div>

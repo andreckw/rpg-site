@@ -22,6 +22,7 @@ def personagem():
         form.genero.data = new_personagem.genero
         form.cabelo_tipo.data = new_personagem.cabelo_tipo
         form.olhos_formato.data = new_personagem.olhos_formato
+        form.tom_pele.data = new_personagem.tom_pele
 
     return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)
 

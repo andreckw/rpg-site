@@ -18,7 +18,9 @@ class PersonagemForm(FlaskForm):
     olhos_formato = SelectField('Formato dos Olhos', 
                                 choices=["Almendoados", "Arrendondados", "Felpudos", "Monólidos", "Gatinho"])
     olhos_cor = StringField('Cor dos Olhos')
-    tom_pele = StringField('Tom de pele')
+    tom_pele = SelectField('Tom de pele', 
+                           choices=["Albino", "Clara", "Média-clara", "Morena",
+                                    "Morena-escura", "Escura"])
     
     travar_nome = BooleanField("Travar nome")
     travar_raca = BooleanField("Travar raca")
@@ -26,6 +28,7 @@ class PersonagemForm(FlaskForm):
     travar_idade = BooleanField("Travar idade")
     travar_peso = BooleanField("Travar peso")
     travar_altura = BooleanField("Travar altura")
+    travar_tom_pele = BooleanField("Travar Tom de Pele")
     travar_tipo_cabelo = BooleanField("Travar Formato de Cabelo")
     travar_cor_cabelo = BooleanField("Travar Cor do Cabelo")
     travar_tipo_olhos = BooleanField("Travar Tipo do Olhos")

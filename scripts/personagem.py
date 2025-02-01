@@ -17,9 +17,6 @@ class Personagem:
     olhos_formato = ""
     olhos_cor = ""
     tom_pele = ""
-    roupa_torso = ""
-    roupa_pernas = ""
-    acessorios = ""
     
 
 def criarpersonagem(form: PersonagemForm):
@@ -38,43 +35,57 @@ def criarpersonagem(form: PersonagemForm):
     idade = form.idade.data
     peso = form.peso.data
     altura = form.altura.data
+    tom_pele = form.tom_pele.data
     cabelo_tipo = form.cabelo_tipo.data
     cabelo_cor = form.cabelo_cor.data
     olhos_tipo = form.olhos_formato.data
     olhos_cor = form.olhos_cor.data
     
-    
+    # Gera Genero
     if form.travar_genero.data == False:
         genero = random.choice(form.genero.choices)
 
+    # Gera nome
     if nome == "" or form.travar_nome.data == False:
         nome = geracao_nome(genero)
     
+    # Gera Idade
     if idade == None or form.travar_idade.data == False:
         idade = int(random.randint(16, 40))
     
+    # Gera Altura
     if altura == None or form.travar_altura.data == False:
         m = float(random.randrange(1, 2))
         cm = random.randrange(0, 100) / 100
         altura = m + cm
     
+    # Gera Peso
     if peso == None or form.travar_peso.data == False:
         peso = 21.7 * (float(altura) * float(altura))
     
+    # Gera Raça
     if raca == "" or form.travar_raca.data == False:
         raca = geracao_raca(altura)
 
+    # Gera Tipo de Olho
     if form.travar_tipo_olhos.data == False:
         olhos_tipo = random.choice(form.olhos_formato.choices)
     
+    # Gera Tipo de Cabelo
     if form.travar_tipo_cabelo.data == False:
         cabelo_tipo = random.choice(form.cabelo_tipo.choices)
-
-    if cabelo_cor == "" or form.travar_cor_cabelo.data == False:
-        cabelo_cor = random.choice(names())
     
+    # Gera Tom de pele
+    if form.travar_tom_pele.data == False:
+        tom_pele = random.choice(form.tom_pele.choices)
+
+    # Gera Cor de Cabelo
+    if cabelo_cor == "" or form.travar_cor_cabelo.data == False:
+        cabelo_cor = random.choice(names()).title()
+    
+    # Gera Cor de olhos
     if olhos_cor == "" or form.travar_cor_olhos.data == False:
-        olhos_cor = random.choice(names())
+        olhos_cor = random.choice(names()).title()
     
     
     new_persoangem = Personagem()
@@ -82,8 +93,9 @@ def criarpersonagem(form: PersonagemForm):
     new_persoangem.raca = raca
     new_persoangem.genero = genero
     new_persoangem.idade = idade
-    new_persoangem.altura = altura
-    new_persoangem.peso = peso
+    new_persoangem.altura = round(altura, 2)
+    new_persoangem.tom_pele = tom_pele
+    new_persoangem.peso = round(peso, 2)
     new_persoangem.cabelo_cor = cabelo_cor
     new_persoangem.cabelo_tipo = cabelo_tipo
     new_persoangem.olhos_cor = olhos_cor
