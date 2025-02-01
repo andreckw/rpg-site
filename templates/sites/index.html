@@ -5,6 +5,41 @@
 {% block tela %} Site de RPG {% endblock %}
 
 {% block conteudo %}
+    <div class="box">
+        <p>
+            <strong>Este site é para auxilio na criação de personagens para RPG de mesa</strong>
+        </p>
+    </div>
 
+    <div class="grid">
+        <div class="cell">
+            <a href="{{ url_for('personagem') }}">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon material-icons">
+                                account_circle
+                            </span>
+                            Criar Personagem
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="cell">
+            <a href="#">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon material-icons">
+                                games
+                            </span>
+                            Calculadora de nível - Sombras das Almas (Em breve)
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 
 {% endblock %}

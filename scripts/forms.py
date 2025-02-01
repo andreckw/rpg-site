@@ -10,21 +10,27 @@ class PersonagemForm(FlaskForm):
     idade = IntegerField("Idade")
     peso = DecimalField("Peso (kg)", places=3)
     altura = DecimalField("Altura (m)", places=2)
-    genero = SelectField("Genero", choices={"Masculino", "Feminino", "Outro"})
+    genero = SelectField("Genero", choices=["Masculino", "Feminino", "Outro"])
 
-    cabelo_tipo = SelectField("Tipo de Cabelo", choices=[("liso", "Liso"), ("ondulado", "Ondulado"), 
-                                                         ("cacheado", "Cacheado"), ("crespo", "Crespo")])
+    cabelo_tipo = SelectField("Tipo de Cabelo", 
+                              choices=["Liso", "Ondulado", "Cacheado", "Crespo"])
     cabelo_cor = StringField('Cor do Cabelo')
-    olhos_tipo = StringField('Tipo dos Olhos')
+    olhos_formato = SelectField('Formato dos Olhos', 
+                                choices=["Almendoados", "Arrendondados", "Felpudos", "Monólidos", "Gatinho"])
     olhos_cor = StringField('Cor dos Olhos')
-    tom_pele = StringField('Tom de pele')
-    roupa_torso = StringField('Roupa do torso')
-    roupa_pernas = StringField('Roupa para pernas')
-    acessorios = StringField('Acessórios')
+    tom_pele = SelectField('Tom de pele', 
+                           choices=["Albino", "Clara", "Média-clara", "Morena",
+                                    "Morena-escura", "Escura"])
     
     travar_nome = BooleanField("Travar nome")
     travar_raca = BooleanField("Travar raca")
+    travar_genero = BooleanField("Travar genero")
     travar_idade = BooleanField("Travar idade")
     travar_peso = BooleanField("Travar peso")
     travar_altura = BooleanField("Travar altura")
+    travar_tom_pele = BooleanField("Travar Tom de Pele")
+    travar_tipo_cabelo = BooleanField("Travar Formato de Cabelo")
+    travar_cor_cabelo = BooleanField("Travar Cor do Cabelo")
+    travar_tipo_olhos = BooleanField("Travar Tipo do Olhos")
+    travar_cor_olhos = BooleanField("Travar Cor do Olhos")
 
