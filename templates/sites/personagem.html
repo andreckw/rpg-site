@@ -33,9 +33,11 @@
                 {{ form.raca.label(class="label") }}
                 {{ form.raca(class="input", value=new_personagem.raca) }}
             </p>
-            <div class="control select">
+            <div class="control">
                 {{ form.genero.label(class="label") }}
-                {{ form.genero() }}
+                <span class="select">
+                    {{ form.genero() }}
+                </span>
             </div>
         </div>
 
@@ -57,44 +59,29 @@
 
     <div class="is-hidden" name="tabs" id="tab_aparencia">
         <div class="field is-grouped">
-            <p class="control select">
+            <p class="control">
                 {{ form.cabelo_tipo.label(class="label") }}
-                {{ form.cabelo_tipo() }}
+                <span class="select">
+                    {{ form.cabelo_tipo() }}
+                </span>
             </p>
             <p class="control is-expanded">
                 {{ form.cabelo_cor.label(class="label") }}
-                {{ form.cabelo_cor(class="input", value=new_personagem.cabelo_cor) }}
+                {{ form.cabelo_cor(class="input", 
+                    value=new_personagem.cabelo_cor) }}
             </p>
         </div>
         <div class="field is-grouped">
+            <p class="control">
+                {{ form.olhos_formato.label(class="label") }}
+                <span class="select">
+                    {{ form.olhos_formato(class="input") }}
+                </span>
+            </p>
             <p class="control is-expanded">
                 {{ form.olhos_cor.label(class="label") }}
-                {{ form.olhos_cor(class="input") }}
-            </p>
-            <p class="control is-expanded">
-                {{ form.olhos_cor.label(class="label") }}
-                {{ form.olhos_cor(class="input") }}
-            </p>
-        </div>
-        <div class="field is-grouped">
-            <p class="control is-expanded">
-                {{ form.roupa_torso.label(class="label") }}
-                {{ form.roupa_torso(class="input") }}
-            </p>
-            <p class="control is-expanded">
-                {{ form.roupa_pernas.label(class="label") }}
-                {{ form.roupa_pernas(class="input") }}
-            </p>
-        </div>
-        <div class="field is-grouped">
-
-            <p class="control is-expanded">
-                {{ form.tom_pele.label(class="label") }}
-                {{ form.tom_pele(class="input") }}
-            </p>
-            <p class="control is-expanded">
-                {{ form.acessorios.label(class="label") }}
-                {{ form.acessorios(class="input") }}
+                {{ form.olhos_cor(class="input", 
+                    value=new_personagem.olhos_cor)}}
             </p>
         </div>
     </div>
@@ -128,6 +115,30 @@
             <p class="control is-expanded">
                 {{ form.travar_raca() }}
                 {{ form.travar_raca.label(class="checkbox") }}
+            </p>
+            <p class="control is-expanded">
+                {{ form.travar_tipo_cabelo() }}
+                {{ form.travar_tipo_cabelo.label(class="checkbox") }}
+            </p>
+        </div>
+        <div class="field is-grouped">
+            <p class="control is-expanded">
+                {{ form.travar_cor_cabelo() }}
+                {{ form.travar_cor_cabelo.label(class="checkbox") }}
+            </p>
+            <p class="control is-expanded">
+                {{ form.travar_tipo_olhos() }}
+                {{ form.travar_tipo_olhos.label(class="checkbox") }}
+            </p>
+            <p class="control is-expanded">
+                {{ form.travar_cor_olhos() }}
+                {{ form.travar_cor_olhos.label(class="checkbox") }}
+            </p>
+        </div>
+        <div class="field is-grouped">
+            <p class="control is-expanded">
+                {{ form.travar_genero() }}
+                {{ form.travar_genero.label(class="checkbox") }}
             </p>
         </div>
     </div>

@@ -3,6 +3,7 @@ import random
 from faker import Faker
 from webcolors import names
 
+
 class Personagem:
     nome = ""
     raca = ""
@@ -13,13 +14,12 @@ class Personagem:
 
     cabelo_tipo = ""
     cabelo_cor = ""
-    olhos_tipo = ""
+    olhos_formato = ""
     olhos_cor = ""
     tom_pele = ""
     roupa_torso = ""
     roupa_pernas = ""
     acessorios = ""
-    
     
 
 def criarpersonagem(form: PersonagemForm):
@@ -40,7 +40,12 @@ def criarpersonagem(form: PersonagemForm):
     altura = form.altura.data
     cabelo_tipo = form.cabelo_tipo.data
     cabelo_cor = form.cabelo_cor.data
+    olhos_tipo = form.olhos_formato.data
+    olhos_cor = form.olhos_cor.data
     
+    
+    if form.travar_genero.data == False:
+        genero = random.choice(form.genero.choices)
 
     if nome == "" or form.travar_nome.data == False:
         nome = geracao_nome(genero)
@@ -59,8 +64,17 @@ def criarpersonagem(form: PersonagemForm):
     if raca == "" or form.travar_raca.data == False:
         raca = geracao_raca(altura)
 
-    if cabelo_cor == "":
+    if form.travar_tipo_olhos.data == False:
+        olhos_tipo = random.choice(form.olhos_formato.choices)
+    
+    if form.travar_tipo_cabelo.data == False:
+        cabelo_tipo = random.choice(form.cabelo_tipo.choices)
+
+    if cabelo_cor == "" or form.travar_cor_cabelo.data == False:
         cabelo_cor = random.choice(names())
+    
+    if olhos_cor == "" or form.travar_cor_olhos.data == False:
+        olhos_cor = random.choice(names())
     
     
     new_persoangem = Personagem()
@@ -71,7 +85,10 @@ def criarpersonagem(form: PersonagemForm):
     new_persoangem.altura = altura
     new_persoangem.peso = peso
     new_persoangem.cabelo_cor = cabelo_cor
-    
+    new_persoangem.cabelo_tipo = cabelo_tipo
+    new_persoangem.olhos_cor = olhos_cor
+    new_persoangem.olhos_formato = olhos_tipo
+        
     return new_persoangem
 
 
@@ -101,7 +118,8 @@ def geracao_nome(gender):
     
     ultimo_nome = "".join(random.choices(silabas, k=qtd_silabas)).title()
     
-    return f"{primeiro_nome} {ultimo_nome}"
+    return f"{primeiro_nome} {ultimo_nome}"    
+
 
 def geracao_raca(altura):
     

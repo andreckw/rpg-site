@@ -19,6 +19,9 @@ def personagem():
     
     if form.validate_on_submit and request.method == 'POST':
         new_personagem = criarpersonagem(form)
+        form.genero.data = new_personagem.genero
+        form.cabelo_tipo.data = new_personagem.cabelo_tipo
+        form.olhos_formato.data = new_personagem.olhos_formato
 
     return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)
 
