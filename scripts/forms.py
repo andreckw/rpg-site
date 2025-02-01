@@ -12,7 +12,8 @@ class PersonagemForm(FlaskForm):
     altura = DecimalField("Altura (m)", places=2)
     genero = SelectField("Genero", choices={"Masculino", "Feminino", "Outro"})
 
-    cabelo_tipo = StringField('Tipo do Cabelo')
+    cabelo_tipo = SelectField("Tipo de Cabelo", choices=[("liso", "Liso"), ("ondulado", "Ondulado"), 
+                                                         ("cacheado", "Cacheado"), ("crespo", "Crespo")])
     cabelo_cor = StringField('Cor do Cabelo')
     olhos_tipo = StringField('Tipo dos Olhos')
     olhos_cor = StringField('Cor dos Olhos')

@@ -57,13 +57,13 @@
 
     <div class="is-hidden" name="tabs" id="tab_aparencia">
         <div class="field is-grouped">
-            <p class="control is-expanded">
+            <p class="control select">
                 {{ form.cabelo_tipo.label(class="label") }}
-                {{ form.cabelo_tipo(class="input") }}
+                {{ form.cabelo_tipo() }}
             </p>
             <p class="control is-expanded">
                 {{ form.cabelo_cor.label(class="label") }}
-                {{ form.cabelo_cor(class="input") }}
+                {{ form.cabelo_cor(class="input", value=new_personagem.cabelo_cor) }}
             </p>
         </div>
         <div class="field is-grouped">

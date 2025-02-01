@@ -1,6 +1,7 @@
 from scripts.forms import PersonagemForm
 import random
 from faker import Faker
+from webcolors import names
 
 class Personagem:
     nome = ""
@@ -37,6 +38,8 @@ def criarpersonagem(form: PersonagemForm):
     idade = form.idade.data
     peso = form.peso.data
     altura = form.altura.data
+    cabelo_tipo = form.cabelo_tipo.data
+    cabelo_cor = form.cabelo_cor.data
     
 
     if nome == "" or form.travar_nome.data == False:
@@ -56,6 +59,9 @@ def criarpersonagem(form: PersonagemForm):
     if raca == "" or form.travar_raca.data == False:
         raca = geracao_raca(altura)
 
+    if cabelo_cor == "":
+        cabelo_cor = random.choice(names())
+    
     
     new_persoangem = Personagem()
     new_persoangem.nome = nome
@@ -64,6 +70,7 @@ def criarpersonagem(form: PersonagemForm):
     new_persoangem.idade = idade
     new_persoangem.altura = altura
     new_persoangem.peso = peso
+    new_persoangem.cabelo_cor = cabelo_cor
     
     return new_persoangem
 
