@@ -26,5 +26,11 @@ def personagem():
 
     return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)
 
+
+@app.route("/calculadora/sombrasdasalmas", methods=['GET', 'POST'])
+def calculadora_sombras_das_almas():
+    
+    return render_template("/sites/calculadoras/sombras_das_almas.html")
+
 if __name__ == "__main__":
     app.run()
