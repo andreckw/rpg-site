@@ -52,13 +52,13 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" onclick="alterarTema(0)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(0)">
                                 Auto
                             </a>
-                            <a class="navbar-item" onclick="alterarTema(1)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(1)">
                                 Dark
                             </a>
-                            <a class="navbar-item" onclick="alterarTema(2)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(2)">
                                 Light
                             </a>
                         </div>
@@ -113,7 +113,7 @@
 
             function alterarTema(id) {
                 
-                let opcoes = document.querySelectorAll('.navbar-dropdown .navbar-item');
+                let opcoes = document.getElementsByName("tema");
 
                 opcoes.forEach((el) => {
                     el.setAttribute("class", "navbar-item");

@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
-from scripts.forms import PersonagemForm
+from flask_wtf.csrf import CSRFProtect
+from scripts.forms import PersonagemForm, CaculadoraSombrasDasAlmas
+from scripts.calculadora import SombraDasAlmas
 from scripts.personagem import criarpersonagem
 
 app = Flask(__name__)
-
 app.config["SECRET_KEY"] = "61aecb89-f2b8-46b9-a85a-c05db0dd2e06"
+
+csrf = CSRFProtect(app)
 
 @app.route("/", methods=['GET'])
 def index():
@@ -17,7 +20,7 @@ def personagem():
     form = PersonagemForm()
     new_personagem = None
     
-    if form.validate_on_submit and request.method == 'POST':
+    if form.validate_on_submit() and request.method == 'POST':
         new_personagem = criarpersonagem(form)
         form.genero.data = new_personagem.genero
         form.cabelo_tipo.data = new_personagem.cabelo_tipo
@@ -29,8 +32,14 @@ def personagem():
 
 @app.route("/calculadora/sombrasdasalmas", methods=['GET', 'POST'])
 def calculadora_sombras_das_almas():
+    form = CaculadoraSombrasDasAlmas()
+
+    if form.validate_on_submit():
+        calculadora = SombraDasAlmas()
+        calculadora.calcular(form)
     
-    return render_template("/sites/calculadoras/sombras_das_almas.html")
+    
+    return render_template("/sites/calculadoras/sombras_das_almas.html", form=form)
 
 if __name__ == "__main__":
     app.run()

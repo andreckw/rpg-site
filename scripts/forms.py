@@ -34,3 +34,24 @@ class PersonagemForm(FlaskForm):
     travar_tipo_olhos = BooleanField("Travar Tipo do Olhos")
     travar_cor_olhos = BooleanField("Travar Cor do Olhos")
 
+
+class CaculadoraSombrasDasAlmas(FlaskForm):
+    forca = IntegerField("FOR", default=2)
+    destreza = IntegerField("DES", default=2)
+    saude = IntegerField("SAU", default=2)
+    conhecimento = IntegerField("CON", default=2)
+    comunicacao = IntegerField("COM", default=2)
+    percepcao = IntegerField("PER", default=2)
+    mente = IntegerField("MEN", default=2)
+    
+    estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
+                                                               ('mente_sagaz', 'Mente Sagaz'),
+                                                               ('pernas_ageis', 'Pernas Ageis'),
+                                                               ('peito_diamente', 'Peito de Diamante'),
+                                                               ('combate_especializado', 'Combate Especializado'),
+                                                               ('ser_silencio', 'Ser do Silêncio'),
+                                                               ('presenca_imponente', 'Presença Imponente'),
+                                                               ('coracao_curativo', 'Coração Curativo'),
+                                                               ('lider_esperanca', 'Lider Esperança')])
+
+    
