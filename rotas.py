@@ -33,13 +33,13 @@ def personagem():
 @app.route("/calculadora/sombrasdasalmas", methods=['GET', 'POST'])
 def calculadora_sombras_das_almas():
     form = CaculadoraSombrasDasAlmas()
+    calculadora = None
 
     if form.validate_on_submit():
-        calculadora = SombraDasAlmas()
-        calculadora.calcular(form)
+        calculadora = SombraDasAlmas().calcular(form)
     
     
-    return render_template("/sites/calculadoras/sombras_das_almas.html", form=form)
+    return render_template("/sites/calculadoras/sombras_das_almas.html", form=form, calculadora=calculadora)
 
 if __name__ == "__main__":
     app.run()

@@ -53,5 +53,8 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
                                                                ('presenca_imponente', 'Presença Imponente'),
                                                                ('coracao_curativo', 'Coração Curativo'),
                                                                ('lider_esperanca', 'Lider Esperança')])
+    
+    nivel_inicial = IntegerField("Nivel inicial", default=1)
+    nivel_final = IntegerField("Nivel final", default=1)
 
     
