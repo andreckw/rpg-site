@@ -21,6 +21,9 @@ class SombraDasAlmas():
     pa = 65
     aa = 0
     
+    ponto_habilidade = 0
+    ponto_maestria = 0
+    
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
 
@@ -91,6 +94,11 @@ class SombraDasAlmas():
         
         self.gerar_pa()
         self.gerar_pv()
+        self.gerar_pb()
+        self.gerar_aa()
+        
+        self.calcular_pontos_maetrias()
+        self.calcular_pontos_habilidades()
         
         if total_atr < pontos_atr_necessario:
             form.form_errors.append(f"Pontos totais necessários não alcançado, precisa de {pontos_atr_necessario}, falta {pontos_atr_necessario - total_atr}")
@@ -125,6 +133,43 @@ class SombraDasAlmas():
                     break
         
         self.pa += self.mente
+    
+    
+    def gerar_pb(self):
+        divisor = 10
+        
+        for n in self.niveis:
+            if n % 5 == 0:
+                divisor-=1
+
+            self.pb += (self.forca + self.percepcao + self.mente) / divisor + (n * 2)
+
+        self.pb = round(self.pb, 2)
+
+
+    def gerar_aa(self):
+        self.aa = (self.forca + self.destreza + self.saude + self.conhecimento + self.mente) / 3
+        
+        for n in self.niveis:
+            if not n % 2 == 0 and n != 1:
+                self.aa += 1
+        
+        self.aa = round(self.aa, 2)
+    
+    
+    def calcular_pontos_maetrias(self):
+        
+        for n in self.niveis:
+            if n % 4 == 0 and n != 1:
+                self.ponto_maestria+=1
+
+
+    def calcular_pontos_habilidades(self):
+        
+        for n in self.niveis:
+            if not n % 2 == 0 and n != 1:
+                self.ponto_habilidade+=1
+        
 
     def gerar_estilo_combate(self, estilo_form):
         niveis = [(1, 1), (2, 10), (11, 20), (21, 30), (31, 40), (41, 50)]
