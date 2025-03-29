@@ -1,0 +1,233 @@
+{% extends "layouts/base.html" %}
+
+{% block titulo %} Calculadora {% endblock %}
+
+{% block tela %} Calculadora - Sombras das Almas {% endblock %}
+
+{% block conteudo %}
+<div class="box">
+    Calculadora de nível para o RPG Sombras das Almas
+</div>
+
+{% for field, errors in form.errors.items() %}
+    <article class="message is-warning">
+        <div class="message-body">
+            {% for er in errors %}
+                {{ er }}
+            {% endfor %}
+        </div>
+    </article>
+{% endfor %}
+
+<form action="#" method="post">
+    <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+            {{ form.nivel_inicial.label }}
+            {{ form.nivel_inicial(class="input", min=1, max=50, onchange="adicionarAtr()") }}
+        </div>
+        <div class="control">
+            {{ form.nivel_final.label }}
+            {{ form.nivel_final(class="input", min=1, max=50) }}
+        </div>
+        <div class="control">
+            {{ form.auto_pontos_restantes() }}
+            {{ form.auto_pontos_restantes.label(class="checkbox") }}
+        </div>
+    </div>
+    {{ form.csrf_token }}
+    <div class="columns is-desktop">
+        <!-- Colocar os atributos iniciais -->
+        <div class="column">
+            <div class="field">
+                <h3 class="title is-3">
+                    Atributos
+                </h3>
+            </div>
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    {{ form.forca.label }}
+                    {{ form.forca(class="input", min=2) }}
+                </p>
+
+                <p class="control is-expanded">
+                    {{ form.destreza.label }}
+                    {{ form.destreza(class="input", min=2) }}
+                </p>
+
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    {{ form.saude.label }}
+                    {{ form.saude(class="input", min=2) }}
+                </p>
+
+                <p class="control is-expanded">
+                    {{ form.conhecimento.label }}
+                    {{ form.conhecimento(class="input", min=2) }}
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    {{ form.comunicacao.label }}
+                    {{ form.comunicacao(class="input", min=2) }}
+                </p>
+
+                <p class="control is-expanded">
+                    {{ form.percepcao.label }}
+                    {{ form.percepcao(class="input", min=2) }}
+                </p>
+            </div>
+            <div class="field is-expanded">
+                {{ form.mente.label }}
+                {{ form.mente(class="input", min=2) }}
+            </div>
+
+            <hr>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    {{ form.estilo_combate.label(class="title is-3") }}
+                    <br>
+                    <span class="select">
+                        {{ form.estilo_combate }}
+                    </span>
+                </p>
+            </div>
+
+            <hr>
+
+
+        </div>
+
+        <!-- Colocar o resultado -->
+        <div class="column">
+            <div class="field">
+                <h3 class="title is-3">
+                    Atributos Finais
+                </h3>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> FOR </label>
+                    <input type="number" class="input" value="{{ calculadora.forca }}">
+                </p>
+                <p class="control">
+                    <label for=""> DES </label>
+                    <input type="number" class="input" value="{{ calculadora.destreza }}">
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> SAU </label>
+                    <input type="number" class="input" value="{{ calculadora.saude }}">
+                </p>
+                <p class="control">
+                    <label for=""> CON  </label>
+                    <input type="number" class="input" value="{{ calculadora.conhecimento }}">
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> COM </label>
+                    <input type="number" class="input" value="{{ calculadora.comunicacao }}">
+                </p>
+                <p class="control">
+                    <label for=""> PER  </label>
+                    <input type="number" class="input" value="{{ calculadora.percepcao }}">
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> MEN </label>
+                    <input type="number" class="input" value="{{ calculadora.mente }}">
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> PV MAX </label>
+                    <input type="number" class="input" value="{{ calculadora.pv }}">
+                </p>
+                <p class="control">
+                    <label for=""> PA MAX </label>
+                    <input type="number" class="input" value="{{ calculadora.pa }}">
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> PB MAX </label>
+                    <input type="number" class="input" value="{{ calculadora.pb }}">
+                </p>
+                <p class="control">
+                    <label for=""> AA MAX </label>
+                    <input type="number" class="input" value="{{ calculadora.aa }}">
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> Pontos de maestria </label>
+                    <input type="number" class="input" value="{{ calculadora.ponto_maestria }}">
+                </p>
+                <p class="control">
+                    <label for=""> Pontos de Habilidade </label>
+                    <input type="number" class="input" value="{{ calculadora.ponto_habilidade }}">
+                </p>
+            </div>
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> Pontos Restantes </label>
+                    <input type="number" class="input" value="{{ calculadora.pontos_restantes }}">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="field is-grouped is-grouped-centered">
+        <button class="button is-success">
+            Calcular
+        </button>
+    </div>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    function adicionarAtr() {
+        let nivel_i = document.getElementById("nivel_inicial").value;
+        let impares = 0;
+        for (let i = 2; i <= nivel_i; i++) {
+            if (!(i % 2 == 0)) {
+                impares++;
+            }
+        }
+
+        document.getElementById("forca").value = 2 + 1 * impares;
+        document.getElementById("destreza").value = 2 + 1 * impares;
+        document.getElementById("saude").value = 2 + 1 * impares;
+        document.getElementById("conhecimento").value = 2 + 1 * impares;
+        document.getElementById("comunicacao").value = 2 + 1 * impares;
+        document.getElementById("percepcao").value = 2 + 1 * impares;
+        document.getElementById("mente").value = 2 + 1 * impares;
+
+        document.getElementById("forca").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("destreza").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("saude").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("conhecimento").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("comunicacao").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("percepcao").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("mente").setAttribute("min", 2 + 1 * impares);
+
+    }
+</script>
+{% endblock %}

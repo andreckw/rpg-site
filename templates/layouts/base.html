@@ -32,6 +32,17 @@
                     <a href="{{ url_for('personagem') }}" class="navbar-item">
                         Criar personagem
                     </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Calculadoras
+                        </a>
+                        
+                        <div class="navbar-dropdown">
+                            <a href="{{ url_for('calculadora_sombras_das_almas') }}" class="navbar-item">
+                                Sombras das Almas
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="navbar-end">
@@ -41,13 +52,13 @@
                         </a>
 
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" onclick="alterarTema(0)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(0)">
                                 Auto
                             </a>
-                            <a class="navbar-item" onclick="alterarTema(1)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(1)">
                                 Dark
                             </a>
-                            <a class="navbar-item" onclick="alterarTema(2)">
+                            <a class="navbar-item" name="tema" onclick="alterarTema(2)">
                                 Light
                             </a>
                         </div>
@@ -67,18 +78,18 @@
         </div>
 
         <footer class="footer content has-text-centered">
-            <p> Feito por um animal com computador </p>
+            <p> Feito por um animal com computador se tiver algum erro, foi mal :b</p>
         </footer>
         
         <script>
             window.onload = () => {
                 let id_tema = 0;
-                document.cookie.split(";").forEach((el) => {
+                document.cookie.split("; ").forEach((el) => {
                     c = el.split("=");
 
-                    if (c[1].replace(" ", "") == "theme-dark") {
+                    if (c[1] == "theme-dark") {
                         id_tema = 1;
-                    } else if (c[1].replace(" ", "") == "theme-light") {
+                    } else if (c[1] == "theme-light") {
                         id_tema = 2;
                     }
                 });
@@ -101,29 +112,29 @@
             });
 
             function alterarTema(id) {
-                
-                let opcoes = document.querySelectorAll('.navbar-dropdown .navbar-item');
+                let opcoes = document.getElementsByName("tema");
 
                 opcoes.forEach((el) => {
                     el.setAttribute("class", "navbar-item");
                 });
 
                 if (id == 0) {
-                    document.cookie = "tema=theme-auto"
+                    document.cookie = "tema=theme-auto;path=/"
                 } else if (id == 1) {
-                    document.cookie = "tema=theme-dark"
+                    document.cookie = "tema=theme-dark;path=/"
                 } else if (id == 2) {
-                    document.cookie = "tema=theme-light"
+                    document.cookie = "tema=theme-light;path=/"
                 }
 
                 const html = document.getElementsByTagName("html")[0];
 
-                let cookies = document.cookie.split(";");
+                let cookies = document.cookie.split("; ");
 
                 cookies.forEach((el) => {
                     c = el.split("=");
 
-                    if (c[0].replace(" ", "") == "tema") {
+                    if (c[0] == "tema") {
+                        console.log(c)
                         html.setAttribute("class", c[1]);
 
                         opcoes[id].setAttribute("class", "navbar-item is-selected");
