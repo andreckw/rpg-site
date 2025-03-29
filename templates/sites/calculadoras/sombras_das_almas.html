@@ -29,6 +29,10 @@
             {{ form.nivel_final.label }}
             {{ form.nivel_final(class="input", min=1, max=50) }}
         </div>
+        <div class="control">
+            {{ form.auto_pontos_restantes() }}
+            {{ form.auto_pontos_restantes.label(class="checkbox") }}
+        </div>
     </div>
     {{ form.csrf_token }}
     <div class="columns is-desktop">
@@ -181,6 +185,12 @@
                     <input type="number" class="input" value="{{ calculadora.ponto_habilidade }}">
                 </p>
             </div>
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for=""> Pontos Restantes </label>
+                    <input type="number" class="input" value="{{ calculadora.pontos_restantes }}">
+                </p>
+            </div>
         </div>
     </div>
 
@@ -209,6 +219,14 @@
         document.getElementById("comunicacao").value = 2 + 1 * impares;
         document.getElementById("percepcao").value = 2 + 1 * impares;
         document.getElementById("mente").value = 2 + 1 * impares;
+
+        document.getElementById("forca").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("destreza").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("saude").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("conhecimento").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("comunicacao").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("percepcao").setAttribute("min", 2 + 1 * impares);
+        document.getElementById("mente").setAttribute("min", 2 + 1 * impares);
 
     }
 </script>

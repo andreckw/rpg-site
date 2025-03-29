@@ -1,5 +1,5 @@
 from scripts.forms import CaculadoraSombrasDasAlmas
-
+import random
     
 
 class SombraDasAlmas():
@@ -23,6 +23,8 @@ class SombraDasAlmas():
     
     ponto_habilidade = 0
     ponto_maestria = 0
+    
+    pontos_restantes = 0
     
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
@@ -59,7 +61,6 @@ class SombraDasAlmas():
         
         self.gerar_estilo_combate(form.estilo_combate.data)
 
-        pontos_atr_total = 39
         
         if form.nivel_inicial.data > form.nivel_final.data:
             form.form_errors.append("Nivel inicial MAIOR que o nivel final")
@@ -70,16 +71,17 @@ class SombraDasAlmas():
         while i <= form.nivel_final.data:
             self.niveis.append(i)
             
-            if i >= 2 and i <= 5:
-                pontos_atr_total += 1
-            elif i >= 6 and i <= 10:
-                pontos_atr_total += 2
-            elif i >= 11 and i <= 20:
-                pontos_atr_total += 3
-            elif i >= 21 and i <= 40:
-                pontos_atr_total += 4
-            elif i >= 41 and i <= 50:
-                pontos_atr_total += 5
+            if i > form.nivel_inicial.data:
+                if i >= 2 and i <= 5:
+                    self.pontos_restantes += 1
+                elif i >= 6 and i <= 10:
+                    self.pontos_restantes += 2
+                elif i >= 11 and i <= 20:
+                    self.pontos_restantes += 3
+                elif i >= 21 and i <= 40:
+                    self.pontos_restantes += 4
+                elif i >= 41 and i <= 50:
+                    self.pontos_restantes += 5
                 
             if i > form.nivel_inicial.data and not i % 2 == 0:
                 self.forca += 1
@@ -90,7 +92,7 @@ class SombraDasAlmas():
                 self.percepcao += 1
                 self.mente += 1
             
-            i+=1        
+            i+=1
         
         self.gerar_pa()
         self.gerar_pv()
@@ -110,8 +112,30 @@ class SombraDasAlmas():
             
             return None
 
+        if form.auto_pontos_restantes.data == True:
+            self.colocar_atributos_restantes()
+
         return self
 
+    def colocar_atributos_restantes(self):
+        
+        i = 0
+        while self.pontos_restantes > 0:
+            pontos = random.randrange(0, self.pontos_restantes + 1)
+            self.pontos_restantes -= pontos
+            match (i):
+                case 1: self.forca += pontos
+                case 2: self.destreza += pontos
+                case 3: self.saude += pontos
+                case 4: self.conhecimento += pontos
+                case 5: self.comunicacao += pontos
+                case 6: self.percepcao += pontos
+                case 7: 
+                    self.mente += pontos
+                    i = 0
+            i+=1
+        
+        return
 
     def gerar_pv(self):
         for n in self.niveis:
@@ -177,7 +201,7 @@ class SombraDasAlmas():
         if estilo_form == "punho_forte":
             vitalidade = [20, 15, 25, 35, 45, 50]
             energia = [20, 15, 25, 35, 45, 50]
-            self.destreza += 2
+            self.forca += 2
         elif estilo_form == "mente_sagaz":
             vitalidade = [0, 8, 13, 18, 23, 25]
             energia = [40, 22, 37, 52, 67, 75]

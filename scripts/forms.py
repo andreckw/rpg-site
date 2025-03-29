@@ -56,5 +56,7 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     
     nivel_inicial = IntegerField("Nivel inicial", default=1)
     nivel_final = IntegerField("Nivel final", default=1)
+    
+    auto_pontos_restantes = BooleanField("Auto adicionar pontos")
 
     
