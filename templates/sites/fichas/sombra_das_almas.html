@@ -1,0 +1,64 @@
+{% extends "layouts/base.html" %}
+
+{% block titulo %} Ficha | Sombras das Almas {% endblock %}
+
+{% block tela %} Ficha - Sombras das Almas {% endblock %}
+
+{% block conteudo %}
+
+<div class="box">
+    Ficha de personagem do Sistema de RPG Sombras das Almas
+</div>
+
+<form action="#" method="post">
+    <!-- Personagem -->
+    <div class="field">
+        <h3 class="title is-3">
+            Personagem
+        </h3>
+    </div>
+
+    <div class="field is-grouped">
+        <p class="control is-expanded">
+            {{ form.nome.label }}
+            {{ form.nome(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.idade.label }}
+            {{ form.idade(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.data_nascimento.label }}
+            {{ form.data_nascimento(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.nivel.label }}
+            {{ form.nivel(class="input") }}
+        </p>
+        
+    </div>
+    <div class="field is-grouped">
+        <p class="control is-expanded">
+            {{ form.jogador.label }}
+            {{ form.jogador(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.altura.label }}
+            {{ form.altura(class="input") }}
+        </p>
+        <p class="control">
+            {{ form.sexo.label }}
+            <br>
+            <span class="select">
+                {{ form.sexo }}
+            </span>
+        </p>
+        <p class="control is-expanded">
+            {{ form.peso.label }}
+            {{ form.peso(class="input") }}
+        </p>
+        
+    </div>
+</form>
+
+{% endblock %}

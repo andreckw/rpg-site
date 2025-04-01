@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, DateField, FloatField
 
 class PersonagemForm(FlaskForm):
     """
@@ -59,4 +59,14 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     
     auto_pontos_restantes = BooleanField("Auto adicionar pontos")
 
+
+class FichaSombrasDasAlmas(FlaskForm):
+    nome = StringField("Nome")
+    idade = IntegerField("Idade")
+    data_nascimento = DateField("Data Nascimento")
+    nivel = IntegerField("Nivel")
+    jogador = StringField("Jogador")
+    altura = FloatField("Altura")
+    sexo = SelectField("Sexo", choices=[('m', 'Masculino'), ('f', 'Feminino'), ('o', 'Outros')])
+    peso = FloatField("Peso")
     
