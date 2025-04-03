@@ -21,21 +21,23 @@
 
 <form action="#" method="post">
     <div class="field is-grouped is-grouped-centered">
-        <div class="control">
+        <div class="control is-expanded">
             {{ form.nivel_inicial.label }}
             {{ form.nivel_inicial(class="input", min=1, max=50, onchange="adicionarAtr()") }}
         </div>
-        <div class="control">
+        <div class="control is-expanded">
             {{ form.nivel_final.label }}
             {{ form.nivel_final(class="input", min=1, max=50) }}
         </div>
+    </div>
+    <div class="field is-grouped is-grouped-centered">
         <div class="control">
             {{ form.auto_pontos_restantes() }}
             {{ form.auto_pontos_restantes.label(class="checkbox") }}
         </div>
     </div>
     {{ form.csrf_token }}
-    <div class="columns is-desktop">
+    <div class="columns">
         <!-- Colocar os atributos iniciais -->
         <div class="column">
             <div class="field">
@@ -110,40 +112,40 @@
             </div>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> FOR </label>
                     <input type="number" class="input" value="{{ calculadora.forca }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> DES </label>
                     <input type="number" class="input" value="{{ calculadora.destreza }}">
                 </p>
             </div>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> SAU </label>
                     <input type="number" class="input" value="{{ calculadora.saude }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> CON  </label>
                     <input type="number" class="input" value="{{ calculadora.conhecimento }}">
                 </p>
             </div>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> COM </label>
                     <input type="number" class="input" value="{{ calculadora.comunicacao }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> PER  </label>
                     <input type="number" class="input" value="{{ calculadora.percepcao }}">
                 </p>
             </div>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> MEN </label>
                     <input type="number" class="input" value="{{ calculadora.mente }}">
                 </p>
@@ -152,22 +154,22 @@
             <hr>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> PV MAX </label>
                     <input type="number" class="input" value="{{ calculadora.pv }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> PA MAX </label>
                     <input type="number" class="input" value="{{ calculadora.pa }}">
                 </p>
             </div>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> PB MAX </label>
                     <input type="number" class="input" value="{{ calculadora.pb }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> AA MAX </label>
                     <input type="number" class="input" value="{{ calculadora.aa }}">
                 </p>
@@ -176,17 +178,17 @@
             <hr>
 
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> Pontos de maestria </label>
                     <input type="number" class="input" value="{{ calculadora.ponto_maestria }}">
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> Pontos de Habilidade </label>
                     <input type="number" class="input" value="{{ calculadora.ponto_habilidade }}">
                 </p>
             </div>
             <div class="field is-grouped">
-                <p class="control">
+                <p class="control is-expanded">
                     <label for=""> Pontos Restantes </label>
                     <input type="number" class="input" value="{{ calculadora.pontos_restantes }}">
                 </p>
