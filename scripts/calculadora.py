@@ -15,6 +15,8 @@ class SombraDasAlmas():
         'energia': [],
     }
     niveis = []
+    saude_nivel = []
+    mente_nivel = []
     
     pv = 75
     pb = 0
@@ -25,6 +27,31 @@ class SombraDasAlmas():
     ponto_maestria = 0
     
     pontos_restantes = 0
+    
+    def __init__(self):
+        self.forca = 2
+        self.destreza = 2
+        self.saude = 2
+        self.conhecimento = 2
+        self.comunicacao = 2
+        self.percepcao = 2
+        self.mente = 2
+        self.estilo_combate = {
+            'vitalidade': [],
+            'energia': [],
+        }
+        self.niveis = []
+        self.saude_nivel = []
+        
+        self.pv = 75
+        self.pb = 0
+        self.pa = 65
+        self.aa = 0
+        
+        self.ponto_habilidade = 0
+        self.ponto_maestria = 0
+        
+        self.pontos_restantes = 0
     
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
@@ -92,7 +119,12 @@ class SombraDasAlmas():
                 self.percepcao += 1
                 self.mente += 1
             
+            self.saude_nivel.append(self.saude)
+            self.mente_nivel.append(self.mente)
             i+=1
+        
+        if form.auto_pontos_restantes.data == True:
+            self.colocar_atributos_restantes()
         
         self.gerar_pa()
         self.gerar_pv()
@@ -112,9 +144,6 @@ class SombraDasAlmas():
             
             return None
 
-        if form.auto_pontos_restantes.data == True:
-            self.colocar_atributos_restantes()
-
         return self
 
     def colocar_atributos_restantes(self):
@@ -126,12 +155,15 @@ class SombraDasAlmas():
             match (i):
                 case 1: self.forca += pontos
                 case 2: self.destreza += pontos
-                case 3: self.saude += pontos
+                case 3: 
+                    self.saude += pontos
+                    self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
                 case 4: self.conhecimento += pontos
                 case 5: self.comunicacao += pontos
                 case 6: self.percepcao += pontos
                 case 7: 
                     self.mente += pontos
+                    self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
                     i = 0
             i+=1
         
@@ -142,10 +174,8 @@ class SombraDasAlmas():
             
             for v in self.estilo_combate["vitalidade"]:
                 if n >= v["n_inicio"] and n <= v["n_final"]:
-                    self.pv += v["valor"]
+                    self.pv += v["valor"] + self.saude_nivel[n - 1]
                     break
-        
-        self.pv += self.saude
 
 
     def gerar_pa(self):
@@ -153,10 +183,8 @@ class SombraDasAlmas():
             
             for m in self.estilo_combate["energia"]:
                 if n >= m["n_inicio"] and n <= m["n_final"]:
-                    self.pa += m["valor"]
+                    self.pa += m["valor"] + self.mente_nivel[n - 1]
                     break
-        
-        self.pa += self.mente
     
     
     def gerar_pb(self):

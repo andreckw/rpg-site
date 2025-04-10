@@ -47,7 +47,7 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
                                                                ('mente_sagaz', 'Mente Sagaz'),
                                                                ('pernas_ageis', 'Pernas Ageis'),
-                                                               ('peito_diamente', 'Peito de Diamante'),
+                                                               ('peito_diamante', 'Peito de Diamante'),
                                                                ('combate_especializado', 'Combate Especializado'),
                                                                ('ser_silencio', 'Ser do Silêncio'),
                                                                ('presenca_imponente', 'Presença Imponente'),
