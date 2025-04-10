@@ -36,8 +36,7 @@ def calculadora_sombras_das_almas():
     calculadora = None
 
     if form.validate_on_submit():
-        calculadora = SombraDasAlmas()
-        calculadora.calcular(form)
+        calculadora = SombraDasAlmas().calcular(form)
     
     
     return render_template("/sites/calculadoras/sombras_das_almas.html", form=form, calculadora=calculadora)
