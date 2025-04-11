@@ -15,6 +15,7 @@ class SombraDasAlmas():
         'energia': [],
     }
     niveis = []
+    nivel_atual = 0
     saude_nivel = []
     mente_nivel = []
     
@@ -61,7 +62,7 @@ class SombraDasAlmas():
         
         self.vantagens = []
         self.desvantagens = []
-        pouco_folego = False
+        self.pouco_folego = False
     
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
@@ -137,14 +138,15 @@ class SombraDasAlmas():
             self.mente_nivel.append(self.mente)
             i+=1
         
+        self.nivel_atual = self.niveis[-1]
         self.calcular_vantagens()
         self.calcular_desvantagens()
         
         if form.auto_pontos_restantes.data == True:
             self.colocar_atributos_restantes()
         
-        self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
-        self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
+        self.saude_nivel[-1] = self.saude
+        self.mente_nivel[-1] = self.mente
         
         self.gerar_pa()
         self.gerar_pv()
@@ -159,10 +161,10 @@ class SombraDasAlmas():
             
             return None
 
-        elif total_atr > pontos_atr_necessario:
-            form.form_errors.append(f"Pontos totais acima do necessário, precisa de {pontos_atr_necessario}, precisa de -{total_atr - pontos_atr_necessario}")
+        elif total_atr > pontos_atr_necessario and self.nivel_atual == 1:
+           form.form_errors.append(f"Pontos totais acima do necessário, precisa de {pontos_atr_necessario}, precisa de -{total_atr - pontos_atr_necessario}")
             
-            return None
+           return None
 
         return self
 
@@ -248,43 +250,52 @@ class SombraDasAlmas():
         if estilo_form == "punho_forte":
             vitalidade = [20, 15, 25, 35, 45, 50]
             energia = [20, 15, 25, 35, 45, 50]
-            self.forca += 2
+            if (self.nivel_atual == 1):
+                self.forca += 2
         elif estilo_form == "mente_sagaz":
             vitalidade = [0, 8, 13, 18, 23, 25]
             energia = [40, 22, 37, 52, 67, 75]
-            self.mente += 2
+            if (self.nivel_atual == 1):
+                self.mente += 2
         elif estilo_form == "pernas_ageis":
             vitalidade = [25, 18, 31, 43, 56, 62]
             energia = [15, 12, 19, 27, 34, 38]
-            self.destreza += 2
+            if (self.nivel_atual == 1):
+                self.destreza += 2
         elif estilo_form == "peito_diamante":
             vitalidade = [40, 22, 37, 52, 67, 75]
             energia = [0, 8, 13, 18, 23, 25]
-            self.saude += 2
+            if (self.nivel_atual == 1):
+                self.saude += 2
         elif estilo_form == "combate_especializado":
             vitalidade = [15, 12, 20, 27, 34, 38]
             energia = [25, 18, 31, 43, 56, 62]
-            self.forca += 1
-            self.destreza += 1
+            if (self.nivel_atual == 1):
+                self.forca += 1
+                self.destreza += 1
         elif estilo_form == "ser_silencio":
             vitalidade = [25, 15, 25, 35, 45, 50]
             energia = [25, 15, 25, 35, 45, 50]
-            self.destreza += 1
-            self.percepcao += 1
+            if (self.nivel_atual == 1):
+                self.destreza += 1
+                self.percepcao += 1
         elif estilo_form == "presenca_imponente":
             vitalidade = [30, 18, 30, 42, 54, 60]
             energia = [20, 12, 20, 28, 36, 40]
-            self.comunicacao += 2
+            if (self.nivel_atual == 1):
+                self.comunicacao += 2
         elif estilo_form == "coracao_curativo":
             vitalidade = [10, 8, 13, 18, 23, 25]
             energia = [30, 22, 37, 52, 67, 75]
-            self.conhecimento += 1
-            self.mente += 1
+            if (self.nivel_atual == 1):
+                self.conhecimento += 1
+                self.mente += 1
         else:
             vitalidade = [30, 22, 37, 52, 67, 75]
             energia = [10, 8, 13, 18, 23, 25]
-            self.comunicacao += 1
-            self.mente += 1
+            if (self.nivel_atual == 1):
+                self.comunicacao += 1
+                self.mente += 1
             
         
         j = 0
@@ -315,7 +326,7 @@ class SombraDasAlmas():
             if v == "litros_sangue":
                 self.pv += 15
                 
-                n_final = self.niveis[len(self.niveis) - 1]
+                n_final = self.nivel_atual
                 
                 while n_final > 1:
                     self.pv += 5
@@ -324,7 +335,7 @@ class SombraDasAlmas():
             elif v == "incansavel":
                 self.pa += 15
                 
-                n_final = self.niveis[len(self.niveis) - 1]
+                n_final = self.nivel_atual
                 
                 while n_final > 1:
                     self.pa += 5
@@ -341,18 +352,19 @@ class SombraDasAlmas():
                 self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
             
             elif v == "talento_natural":
-                match (self.vantagem_talento):
-                    case "FOR": self.forca += 2
-                    case "DES": self.destreza += 2
-                    case "SAU": 
-                        self.saude += 2
-                        self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
-                    case "CON": self.conhecimento += 2
-                    case "COM": self.comunicacao += 2
-                    case "PER": self.percepcao += 2
-                    case "MEN": 
-                        self.mente += 2
-                        self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
+                if (self.nivel_atual == 1):
+                    match (self.vantagem_talento):
+                        case "FOR": self.forca += 2
+                        case "DES": self.destreza += 2
+                        case "SAU": 
+                            self.saude += 2
+                            self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
+                        case "CON": self.conhecimento += 2
+                        case "COM": self.comunicacao += 2
+                        case "PER": self.percepcao += 2
+                        case "MEN": 
+                            self.mente += 2
+                            self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
         
         
     def calcular_desvantagens(self):
@@ -363,12 +375,13 @@ class SombraDasAlmas():
             elif v == "pouco_folego":
                 self.pouco_folego = True
             elif v == "sem_talento":
-                match (self.vantagem_talento):
-                    case "FOR": self.forca -= 1
-                    case "DES": self.destreza -= 1
-                    case "SAU": self.saude -= 1
-                    case "CON": self.conhecimento -= 1
-                    case "COM": self.comunicacao -= 1
-                    case "PER": self.percepcao -= 1
-                    case "MEN": self.mente -= 1
+                if (self.nivel_atual == 1):
+                    match (self.vantagem_talento):
+                        case "FOR": self.forca -= 1
+                        case "DES": self.destreza -= 1
+                        case "SAU": self.saude -= 1
+                        case "CON": self.conhecimento -= 1
+                        case "COM": self.comunicacao -= 1
+                        case "PER": self.percepcao -= 1
+                        case "MEN": self.mente -= 1
                         
