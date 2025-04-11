@@ -107,8 +107,15 @@
                     Aperte Ctrl para selecionar/deselecionar opções
                     <br>
                     <span class="select is-multiple">
-                        {{ form.vantagens }}
+                        {{ form.vantagens(onchange="mostrarTalento()") }}
                     </span>
+                    <br><br>
+                    <div id="div_v_talento" hidden>
+                        {{ form.vantagem_talento.label }}
+                        <span class="select">
+                            {{ form.vantagem_talento }}
+                        </span>
+                    </div>
                 </p>
             </div>
 
@@ -121,8 +128,15 @@
                     Aperte Ctrl para selecionar/deselecionar opções
                     <br>
                     <span class="select is-multiple">
-                        {{ form.desvantagens }}
+                        {{ form.desvantagens(onchange="mostrarTalento(1)") }}
                     </span>
+                    <br><br>
+                    <div id="div_d_talento" hidden>
+                        {{ form.desvantagem_talento.label }}
+                        <span class="select">
+                            {{ form.desvantagem_talento }}
+                        </span>
+                    </div>
                 </p>
             </div>
 
@@ -233,6 +247,9 @@
 {% endblock %}
 {% block js %}
 <script>
+    mostrarTalento()
+    mostrarTalento(1)
+
     function adicionarAtr() {
         let nivel_i = document.getElementById("nivel_inicial").value;
         let impares = 0;
@@ -258,6 +275,33 @@
         document.getElementById("percepcao").setAttribute("min", 2 + 1 * impares);
         document.getElementById("mente").setAttribute("min", 2 + 1 * impares);
 
+    }
+
+    function mostrarTalento(id = 0) {
+        select = document.getElementById("vantagens");
+        element = document.getElementById("div_v_talento");
+
+        if (id == 1) {
+            select = document.getElementById("desvantagens");
+            element = document.getElementById("div_d_talento");
+        }
+
+        var values = Array.from(select.options).filter(op => op.selected).map(op => op.value);
+
+        let achou = false;
+        for (let i = 0; i < values.length; i++) {
+            if (values[i] == "talento_natural" || values[i] == "sem_talento") {
+                element.removeAttribute("hidden");
+                console.log(element);
+                achou = true;
+                break;
+            }
+        }
+
+        if (!achou) {
+            element.setAttribute("hidden", "true");
+        }
+        
     }
 </script>
 {% endblock %}

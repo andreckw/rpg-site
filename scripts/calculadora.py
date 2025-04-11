@@ -30,6 +30,9 @@ class SombraDasAlmas():
     
     vantagens = []
     desvantagens = []
+    vantagem_talento = ""
+    desvantagem_talento = ""
+    pouco_folego = False
     
     def __init__(self):
         self.forca = 2
@@ -58,6 +61,7 @@ class SombraDasAlmas():
         
         self.vantagens = []
         self.desvantagens = []
+        pouco_folego = False
     
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
@@ -71,6 +75,8 @@ class SombraDasAlmas():
         self.mente = form.mente.data
         self.vantagens = form.vantagens.data
         self.desvantagens = form.desvantagens.data
+        self.vantagem_talento = form.vantagem_talento.data
+        self.desvantagem_talento = form.desvantagem_talento.data
         
         # Calcula os pontos necessarios para o nivel inicial selecionado
         pontos_atr_necessario = 39
@@ -132,9 +138,13 @@ class SombraDasAlmas():
             i+=1
         
         self.calcular_vantagens()
+        self.calcular_desvantagens()
         
         if form.auto_pontos_restantes.data == True:
             self.colocar_atributos_restantes()
+        
+        self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
+        self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
         
         self.gerar_pa()
         self.gerar_pv()
@@ -165,15 +175,12 @@ class SombraDasAlmas():
             match (i):
                 case 1: self.forca += pontos
                 case 2: self.destreza += pontos
-                case 3: 
-                    self.saude += pontos
-                    self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
+                case 3: self.saude += pontos
                 case 4: self.conhecimento += pontos
                 case 5: self.comunicacao += pontos
                 case 6: self.percepcao += pontos
-                case 7: 
+                case 7:
                     self.mente += pontos
-                    self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
                     i = 0
             i+=1
         
@@ -194,6 +201,8 @@ class SombraDasAlmas():
             for m in self.estilo_combate["energia"]:
                 if n >= m["n_inicio"] and n <= m["n_final"]:
                     self.pa += m["valor"] + self.mente_nivel[n - 1]
+                    if n == 1 and self.pouco_folego:
+                        self.pa -= (self.pa * 0.25)
                     break
     
     
@@ -330,3 +339,36 @@ class SombraDasAlmas():
                 self.saude += 1
                 self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
                 self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
+            
+            elif v == "talento_natural":
+                match (self.vantagem_talento):
+                    case "FOR": self.forca += 2
+                    case "DES": self.destreza += 2
+                    case "SAU": 
+                        self.saude += 2
+                        self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
+                    case "CON": self.conhecimento += 2
+                    case "COM": self.comunicacao += 2
+                    case "PER": self.percepcao += 2
+                    case "MEN": 
+                        self.mente += 2
+                        self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
+        
+        
+    def calcular_desvantagens(self):
+        
+        for v in self.desvantagens:
+            if v == "saude_fragil":
+                self.pv -= 25
+            elif v == "pouco_folego":
+                self.pouco_folego = True
+            elif v == "sem_talento":
+                match (self.vantagem_talento):
+                    case "FOR": self.forca -= 1
+                    case "DES": self.destreza -= 1
+                    case "SAU": self.saude -= 1
+                    case "CON": self.conhecimento -= 1
+                    case "COM": self.comunicacao -= 1
+                    case "PER": self.percepcao -= 1
+                    case "MEN": self.mente -= 1
+                        

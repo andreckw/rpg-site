@@ -64,8 +64,15 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
                                     ('aura_monstruosa', "Aura Monstruosa"),
                                     ('talento_natural', 'Talento Natural'),
                                     ('membro_ember', 'Membro da Ember of Souls')])
+
+    vantagem_talento = SelectField(label="Talento Natural", choices=["FOR", "DES", "SAU",
+                                                                     "CON","COM", "PER", "MEN"])
     
     desvantagens = SelectMultipleField(label="Desvantagens", choices=[('saude_fragil', 'Saúde Frágil'),
+                                                                      ('pouco_folego', "Pouco Fôlego "),
                                                                       ('sem_talento', 'Sem Talento')])
+    
+    desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
+                                                                     "CON","COM", "PER", "MEN"])
 
     
