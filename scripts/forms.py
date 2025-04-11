@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField
 
 class PersonagemForm(FlaskForm):
     """
@@ -58,5 +58,14 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     nivel_final = IntegerField("Nivel final", default=1)
     
     auto_pontos_restantes = BooleanField("Auto adicionar pontos")
+    
+    vantagens = SelectMultipleField(label="Vantagens", choices=[('litros_sangue', 'Litros de Sangue'),
+                                    ('incansavel', 'Incansável'),
+                                    ('aura_monstruosa', "Aura Monstruosa"),
+                                    ('talento_natural', 'Talento Natural'),
+                                    ('membro_ember', 'Membro da Ember of Souls')])
+    
+    desvantagens = SelectMultipleField(label="Desvantagens", choices=[('saude_fragil', 'Saúde Frágil'),
+                                                                      ('sem_talento', 'Sem Talento')])
 
     

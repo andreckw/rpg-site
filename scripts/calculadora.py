@@ -28,6 +28,9 @@ class SombraDasAlmas():
     
     pontos_restantes = 0
     
+    vantagens = []
+    desvantagens = []
+    
     def __init__(self):
         self.forca = 2
         self.destreza = 2
@@ -52,6 +55,9 @@ class SombraDasAlmas():
         self.ponto_maestria = 0
         
         self.pontos_restantes = 0
+        
+        self.vantagens = []
+        self.desvantagens = []
     
     def calcular(self, form: CaculadoraSombrasDasAlmas):
         self.niveis = []
@@ -63,6 +69,8 @@ class SombraDasAlmas():
         self.comunicacao = form.comunicacao.data
         self.percepcao = form.percepcao.data
         self.mente = form.mente.data
+        self.vantagens = form.vantagens.data
+        self.desvantagens = form.desvantagens.data
         
         # Calcula os pontos necessarios para o nivel inicial selecionado
         pontos_atr_necessario = 39
@@ -122,6 +130,8 @@ class SombraDasAlmas():
             self.saude_nivel.append(self.saude)
             self.mente_nivel.append(self.mente)
             i+=1
+        
+        self.calcular_vantagens()
         
         if form.auto_pontos_restantes.data == True:
             self.colocar_atributos_restantes()
@@ -200,7 +210,7 @@ class SombraDasAlmas():
 
 
     def gerar_aa(self):
-        self.aa = (self.forca + self.destreza + self.saude + self.conhecimento + self.mente) / 3
+        self.aa += (self.forca + self.destreza + self.saude + self.conhecimento + self.mente) / 3
         
         for n in self.niveis:
             if not n % 2 == 0 and n != 1:
@@ -288,3 +298,35 @@ class SombraDasAlmas():
             self.estilo_combate['energia'].append(n_energia)
             
             j+=1
+       
+            
+    def calcular_vantagens(self):
+        
+        for v in self.vantagens:
+            if v == "litros_sangue":
+                self.pv += 15
+                
+                n_final = self.niveis[len(self.niveis) - 1]
+                
+                while n_final > 1:
+                    self.pv += 5
+                    n_final -= 1
+                    
+            elif v == "incansavel":
+                self.pa += 15
+                
+                n_final = self.niveis[len(self.niveis) - 1]
+                
+                while n_final > 1:
+                    self.pa += 5
+                    n_final -= 1
+                
+            elif v == "aura_monstruosa":
+                self.aa += 2
+            
+            elif v == "membro_ember":
+                self.mente += 1
+                self.forca += 1
+                self.saude += 1
+                self.saude_nivel[len(self.saude_nivel) - 1] = self.saude
+                self.mente_nivel[len(self.mente_nivel) - 1] = self.mente
