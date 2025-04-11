@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField
+
 
 class PersonagemForm(FlaskForm):
     """
@@ -75,4 +76,14 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
                                                                      "CON","COM", "PER", "MEN"])
 
+
+class FichaSombrasDasAlmas(FlaskForm):
+    nome = StringField("Nome")
+    idade = IntegerField("Idade")
+    data_nascimento = DateField("Data Nascimento")
+    nivel = IntegerField("Nivel")
+    jogador = StringField("Jogador")
+    altura = FloatField("Altura")
+    sexo = SelectField("Sexo", choices=[('m', 'Masculino'), ('f', 'Feminino'), ('o', 'Outros')])
+    peso = FloatField("Peso")
     
