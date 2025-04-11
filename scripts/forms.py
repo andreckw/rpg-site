@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, DateField, FloatField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField
+
 
 class PersonagemForm(FlaskForm):
     """
@@ -47,7 +48,7 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
                                                                ('mente_sagaz', 'Mente Sagaz'),
                                                                ('pernas_ageis', 'Pernas Ageis'),
-                                                               ('peito_diamente', 'Peito de Diamante'),
+                                                               ('peito_diamante', 'Peito de Diamante'),
                                                                ('combate_especializado', 'Combate Especializado'),
                                                                ('ser_silencio', 'Ser do Silêncio'),
                                                                ('presenca_imponente', 'Presença Imponente'),
@@ -58,6 +59,22 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     nivel_final = IntegerField("Nivel final", default=1)
     
     auto_pontos_restantes = BooleanField("Auto adicionar pontos")
+    
+    vantagens = SelectMultipleField(label="Vantagens", choices=[('litros_sangue', 'Litros de Sangue'),
+                                    ('incansavel', 'Incansável'),
+                                    ('aura_monstruosa', "Aura Monstruosa"),
+                                    ('talento_natural', 'Talento Natural'),
+                                    ('membro_ember', 'Membro da Ember of Souls')])
+
+    vantagem_talento = SelectField(label="Talento Natural", choices=["FOR", "DES", "SAU",
+                                                                     "CON","COM", "PER", "MEN"])
+    
+    desvantagens = SelectMultipleField(label="Desvantagens", choices=[('saude_fragil', 'Saúde Frágil'),
+                                                                      ('pouco_folego', "Pouco Fôlego "),
+                                                                      ('sem_talento', 'Sem Talento')])
+    
+    desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
+                                                                     "CON","COM", "PER", "MEN"])
 
 
 class FichaSombrasDasAlmas(FlaskForm):
