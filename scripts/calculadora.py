@@ -48,7 +48,7 @@ class SombraDasAlmas():
             'energia': [],
         }
         self.niveis = []
-        self.saude_nivel = []
+        self.atr_niveis = []
         
         self.pv = 75
         self.pb = 0
@@ -100,9 +100,10 @@ class SombraDasAlmas():
             i+=1
         # Calcula o total de pontos adicionado
         total_atr = self.forca + self.destreza + self.saude + self.conhecimento + self.comunicacao + self.percepcao + self.mente
-        
+                
         self.gerar_estilo_combate(form.estilo_combate.data)
-
+        pontos_atr_necessario += self.gerar_aura(form.aura.data)
+        
         
         if form.nivel_inicial.data > form.nivel_final.data:
             form.form_errors.append("Nivel inicial MAIOR que o nivel final")
@@ -242,6 +243,39 @@ class SombraDasAlmas():
         for n in self.niveis:
             if not n % 2 == 0 and n != 1:
                 self.ponto_habilidade+=1
+    
+    
+    def gerar_aura(self, aura_form):
+        
+        if aura_form == "red":
+            self.forca += 1
+            self.mente += 1
+        elif aura_form == "blue":
+            self.destreza += 1
+            self.conhecimento += 1
+        elif aura_form == "flavus":
+            self.forca += 1
+            self.destreza += 1
+        elif aura_form == "aureum":
+            self.percepcao += 1
+            self.conhecimento += 1
+        elif aura_form == "purpura":
+            self.comunicacao += 1
+            self.mente += 1
+        elif aura_form == "viridis":
+            self.saude += 1
+            self.mente += 1
+        elif aura_form == "gray":
+            return 2
+        elif aura_form == "niger":
+            self.mente += 1
+            self.comunicacao += 1
+            self.conhecimento += 1
+        elif aura_form == "alba":
+            self.mente += 1
+            self.saude += 1
+            self.conhecimento += 1
+        return 0
         
 
     def gerar_estilo_combate(self, estilo_form):

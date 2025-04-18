@@ -40,6 +40,30 @@
     <div class="columns">
         <!-- Colocar os atributos iniciais -->
         <div class="column">
+            <div class="field is-grouped">
+                <p class="control">
+                    {{ form.estilo_combate.label(class="title is-3") }}
+                    <br>
+                    <span class="select">
+                        {{ form.estilo_combate }}
+                    </span>
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    {{ form.aura.label(class="title is-3") }}
+                    <br>
+                    <span class="select">
+                        {{ form.aura }}
+                    </span>
+                </p>
+            </div>
+
+            <hr>
+
             <div class="field">
                 <h3 class="title is-3">
                     Atributos
@@ -84,18 +108,6 @@
             <div class="field is-expanded">
                 {{ form.mente.label }}
                 {{ form.mente(class="input", min=2) }}
-            </div>
-
-            <hr>
-
-            <div class="field is-grouped">
-                <p class="control">
-                    {{ form.estilo_combate.label(class="title is-3") }}
-                    <br>
-                    <span class="select">
-                        {{ form.estilo_combate }}
-                    </span>
-                </p>
             </div>
 
             <hr>

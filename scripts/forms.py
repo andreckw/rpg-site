@@ -55,6 +55,16 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
                                                                ('coracao_curativo', 'Coração Curativo'),
                                                                ('lider_esperanca', 'Lider Esperança')])
     
+    aura = SelectField("Aura", choices=[('red', 'Red Aura'),
+                                        ('blue', 'Blue Aura'),
+                                        ('flavus', 'Flavus Aura'),
+                                        ('aureum', 'Aureum Aura'),
+                                        ('purpura', 'Purpura Aura'),
+                                        ('viridis', 'Viridis Aura'),
+                                        ('gray', 'Gray Aura'),
+                                        ('niger', 'Niger Aura'),
+                                        ('alba', 'Alba Aura')])
+    
     nivel_inicial = IntegerField("Nivel inicial", default=1)
     nivel_final = IntegerField("Nivel final", default=1)
     
@@ -76,14 +86,4 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
                                                                      "CON","COM", "PER", "MEN"])
 
-
-class FichaSombrasDasAlmas(FlaskForm):
-    nome = StringField("Nome")
-    idade = IntegerField("Idade")
-    data_nascimento = DateField("Data Nascimento")
-    nivel = IntegerField("Nivel")
-    jogador = StringField("Jogador")
-    altura = FloatField("Altura")
-    sexo = SelectField("Sexo", choices=[('m', 'Masculino'), ('f', 'Feminino'), ('o', 'Outros')])
-    peso = FloatField("Peso")
     
