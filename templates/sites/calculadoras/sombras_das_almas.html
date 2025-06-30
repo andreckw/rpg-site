@@ -23,7 +23,7 @@
     <div class="field is-grouped is-grouped-centered">
         <div class="control is-expanded">
             {{ form.nivel_inicial.label }}
-            {{ form.nivel_inicial(class="input", min=1, max=50, onchange="adicionarAtr()") }}
+            {{ form.nivel_inicial(class="input", min=1, max=50, onchange="adicionarAtr(), mostrarPv()") }}
         </div>
         <div class="control is-expanded">
             {{ form.nivel_final.label }}
@@ -134,7 +134,7 @@
             <hr>
 
             <div class="field">
-                <p class="control ">
+                <p class="control">
                     {{ form.desvantagens.label(class="title is-3") }}
                     <br>
                     Aperte Ctrl para selecionar/deselecionar opções
@@ -154,6 +154,17 @@
 
             <hr>
 
+            <div class="field" id="div_pv">
+                <p class="control is-expanded">
+                    {{ form.pv.label }}
+                    {{ form.pv(class="input", min=75) }}
+                </p>
+            
+                <p class="control is-expanded">
+                    {{ form.pa.label }}
+                    {{ form.pa(class="input", min=65) }}
+                </p>
+            </div>
 
         </div>
 
@@ -261,6 +272,18 @@
 <script>
     mostrarTalento()
     mostrarTalento(1)
+    mostrarPv()
+
+    function mostrarPv() {
+        let nivel_i = document.getElementById("nivel_inicial").value;
+        let div_p = document.getElementById("div_pv");
+        
+        if (nivel_i > 1) {
+            div_p.removeAttribute("hidden");
+        } else {
+            div_p.setAttribute("hidden", "true");
+        }
+    }
 
     function adicionarAtr() {
         let nivel_i = document.getElementById("nivel_inicial").value;

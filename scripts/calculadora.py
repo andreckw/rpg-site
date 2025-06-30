@@ -19,9 +19,9 @@ class SombraDasAlmas():
     saude_nivel = []
     mente_nivel = []
     
-    pv = 75
+    pv = 0
     pb = 0
-    pa = 65
+    pa = 0
     aa = 0
     
     ponto_habilidade = 0
@@ -110,7 +110,9 @@ class SombraDasAlmas():
             return None
         
         # Calcula os pontos total para o nivel final selecionado
-        i = 1
+        i = form.nivel_inicial.data
+        self.pv = form.pv.data
+        self.pa = form.pa.data
         while i <= form.nivel_final.data:
             self.niveis.append(i)
             
@@ -193,6 +195,7 @@ class SombraDasAlmas():
         for n in self.niveis:
             
             for v in self.estilo_combate["vitalidade"]:
+                print(v)
                 if n >= v["n_inicio"] and n <= v["n_final"]:
                     self.pv += v["valor"] + self.saude_nivel[n - 1]
                     break

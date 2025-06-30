@@ -45,6 +45,9 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     percepcao = IntegerField("PER", default=2)
     mente = IntegerField("MEN", default=2)
     
+    pv = IntegerField("PV", default=75)
+    pa = IntegerField("PA", default=65)
+    
     estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
                                                                ('mente_sagaz', 'Mente Sagaz'),
                                                                ('pernas_ageis', 'Pernas Ageis'),
