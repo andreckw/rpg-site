@@ -19,9 +19,9 @@ class SombraDasAlmas():
     saude_nivel = []
     mente_nivel = []
     
-    pv = 75
+    pv = 0
     pb = 0
-    pa = 65
+    pa = 0
     aa = 0
     
     ponto_habilidade = 0
@@ -48,7 +48,7 @@ class SombraDasAlmas():
             'energia': [],
         }
         self.niveis = []
-        self.saude_nivel = []
+        self.atr_niveis = []
         
         self.pv = 75
         self.pb = 0
@@ -100,16 +100,19 @@ class SombraDasAlmas():
             i+=1
         # Calcula o total de pontos adicionado
         total_atr = self.forca + self.destreza + self.saude + self.conhecimento + self.comunicacao + self.percepcao + self.mente
-        
+                
         self.gerar_estilo_combate(form.estilo_combate.data)
-
+        pontos_atr_necessario += self.gerar_aura(form.aura.data)
+        
         
         if form.nivel_inicial.data > form.nivel_final.data:
             form.form_errors.append("Nivel inicial MAIOR que o nivel final")
             return None
         
         # Calcula os pontos total para o nivel final selecionado
-        i = 1
+        i = form.nivel_inicial.data
+        self.pv = form.pv.data
+        self.pa = form.pa.data
         while i <= form.nivel_final.data:
             self.niveis.append(i)
             
@@ -192,6 +195,7 @@ class SombraDasAlmas():
         for n in self.niveis:
             
             for v in self.estilo_combate["vitalidade"]:
+                print(v)
                 if n >= v["n_inicio"] and n <= v["n_final"]:
                     self.pv += v["valor"] + self.saude_nivel[n - 1]
                     break
@@ -242,6 +246,39 @@ class SombraDasAlmas():
         for n in self.niveis:
             if not n % 2 == 0 and n != 1:
                 self.ponto_habilidade+=1
+    
+    
+    def gerar_aura(self, aura_form):
+        
+        if aura_form == "red":
+            self.forca += 1
+            self.mente += 1
+        elif aura_form == "blue":
+            self.destreza += 1
+            self.conhecimento += 1
+        elif aura_form == "flavus":
+            self.forca += 1
+            self.destreza += 1
+        elif aura_form == "aureum":
+            self.percepcao += 1
+            self.conhecimento += 1
+        elif aura_form == "purpura":
+            self.comunicacao += 1
+            self.mente += 1
+        elif aura_form == "viridis":
+            self.saude += 1
+            self.mente += 1
+        elif aura_form == "gray":
+            return 2
+        elif aura_form == "niger":
+            self.mente += 1
+            self.comunicacao += 1
+            self.conhecimento += 1
+        elif aura_form == "alba":
+            self.mente += 1
+            self.saude += 1
+            self.conhecimento += 1
+        return 0
         
 
     def gerar_estilo_combate(self, estilo_form):
