@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField
 
 
 class PersonagemForm(FlaskForm):
@@ -88,5 +88,34 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     
     desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
                                                                      "CON","COM", "PER", "MEN"])
+    
+    
+class FichaSombrasDasAlmas(FlaskForm):
+    nome = StringField(label="Nome")
+    idade = IntegerField(label="Idade")
+    data_nascimento = DateField(label="Data Nascimento")
+    
+    nivel = IntegerField(label="Nivel")
+    jogador = StringField(label="Jogador")
+    altura = FloatField(label="Altura (m)")
+    sexo = SelectField(label="Sexo", choices=["Masculino", "Feminino", "Outro"])
+    peso = FloatField(label="Peso (kg)")
+    
+    forca = IntegerField("FOR", default=2)
+    destreza = IntegerField("DES", default=2)
+    saude = IntegerField("SAU", default=2)
+    conhecimento = IntegerField("CON", default=2)
+    comunicacao = IntegerField("COM", default=2)
+    percepcao = IntegerField("PER", default=2)
+    mente = IntegerField("MEN", default=2)
+    
+    pv_atual = IntegerField("PV", default=75)
+    pv_max = IntegerField("PV Max", default=75)
+    pb_atual = IntegerField("PB", default=0)
+    pb_max = IntegerField("PB Max", default=0)
+    pa_atual = IntegerField("PA", default=65)
+    pa_max = IntegerField("PA Max", default=65)
+    aa_atual = IntegerField("AA", default=0)
+    aa_max = IntegerField("AA Max", default=0)
 
     

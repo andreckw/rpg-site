@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_wtf.csrf import CSRFProtect
-from scripts.forms import PersonagemForm, CaculadoraSombrasDasAlmas
+from scripts.forms import PersonagemForm, CaculadoraSombrasDasAlmas, FichaSombrasDasAlmas
 from scripts.calculadora import SombraDasAlmas
 from scripts.personagem import criarpersonagem
 
@@ -41,6 +41,15 @@ def calculadora_sombras_das_almas():
     
     
     return render_template("/sites/calculadoras/sombras_das_almas.html", form=form, calculadora=calculadora)
+
+
+@app.route("/fichas/sombrasdasalmas", methods=['GET', 'POST'])
+def ficha_sombras_das_almas():
+    form = FichaSombrasDasAlmas()
+
+    
+    
+    return render_template("/sites/fichas/sombras_das_almas.html", form=form)
 
 if __name__ == "__main__":
     app.run()
