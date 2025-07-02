@@ -234,7 +234,178 @@
         </div>
         <div class="column">
 
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.personalidade.label }}
+                </h3>
+                {{ form.personalidade(class="textarea") }}
+            </div>
+
+            <hr>
+
+
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.maestrias.label }}
+                </h3>
+
+                <button type="button" class="button is-primary" onclick="adicionarMaestria()">
+                    Adicionar Maestria
+                </button>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>ATR</th>
+                            <th>Descrição</th>
+                            <th>Exp</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-maestria">
+                        {% for m in form.maestrias %}
+                            
+                            <tr id="tr-maestria-{{ loop.index }}">
+                                <td>{{ m.nome(class="input") }}</td>
+                                <td>{{ m.atr(class="input") }}</td>
+                                <td>{{ m.desc(class="input") }}</td>
+                                <td>{{ m.exp(class="input") }}</td>
+                                <td>{{ m.nivel(class="input") }}</td>
+                                <td>
+                                    <button type="button" class="button is-danger" onclick="deletarMaestria(this)">
+                                        <span class="icon material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
+
+    <hr>
+
+    <div class="columns">
+        <div class="column">
+            
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.historia.label }}
+                </h3>
+                {{ form.historia(class="textarea") }}
+            </div>
+
+        </div>
+        <div class="column">
+
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.aparencia.label }}
+                </h3>
+                {{ form.aparencia(class="textarea") }}
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="field">
+        <h3 class="title is-3">
+            {{ form.habilidades.label }}
+        </h3>
+
+        <button type="button" class="button is-primary" onclick="adicionarHab()">
+            Adicionar Habilidade
+        </button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th width="30%">Descrição/Efeito</th>
+                    <th>Nivel Atual</th>
+                    <th>Nivel Max</th>
+                    <th>Custo PA</th>
+                    <th>Custo AA</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-hab">
+                {% for h in form.habilidades %}
+                    
+                    <tr id="tr-hab-{{ loop.index }}">
+                        <td>{{ h.nome(class="input") }}</td>
+                        <td>{{ h.desc(class="input") }}</td>
+                        <td>{{ h.nivel_atual(class="input") }}</td>
+                        <td>{{ h.nivel_max(class="input") }}</td>
+                        <td>{{ h.custo_pa(class="input") }}</td>
+                        <td>{{ h.custo_aa(class="input") }}</td>
+                        <td>
+                            <button type="button" class="button is-danger" onclick="deletarHab(this)">
+                                <span class="icon material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div class="field">
+        <h3 class="title is-3">
+            {{ form.inventario.label }}
+        </h3>
+
+        <button type="button" class="button is-primary" onclick="adicionarItem()">
+            Adicionar Inventario
+        </button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição/Efeito</th>
+                    <th>Tipo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-inventario">
+                {% for i in form.inventario %}
+                    
+                    <tr id="tr-item-{{ loop.index }}">
+                        <td>{{ i.nome(class="input") }}</td>
+                        <td>{{ i.desc(class="input") }}</td>
+                        <td>
+                            <p class="control">
+                                <span class="select">
+                                    {{ i.tipo(class="input") }}
+                                </span>
+                            </p>
+                        </td>
+                        <td>
+                            <button type="button" class="button is-danger" onclick="deletarItem(this)">
+                                <span class="icon material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </form>
 
@@ -244,6 +415,10 @@
 
 <script>
     let ultimoV = document.getElementById("tbody-ved").rows.length - 1;
+    let ultimoM = document.getElementById("tbody-maestria").rows.length - 1;
+    let ultimoH = document.getElementById("tbody-hab").rows.length - 1;
+    let ultimoI = document.getElementById("tbody-hab").rows.length - 1;
+
     function adicionarVantagem() {
 
         ultimoV++;
@@ -253,7 +428,7 @@
         var tr = document.getElementById("tr-ved-1").cloneNode(true);
 
         table.appendChild(tr);
-        consertarIds();
+        consertarIds("tbody-ved");
     }
 
     function deletarVantagem(elem) {
@@ -267,18 +442,100 @@
 
         tr.remove();
         ultimoV--;
-        consertarIds();
+        consertarIds("tbody-ved");
     }
 
 
-    function consertarIds() {
-        let table = document.getElementById("tbody-ved");
+    function adicionarMaestria() {
+
+        ultimoM++;
+
+        var table = document.getElementById("tbody-maestria");
+
+        var tr = document.getElementById("tr-maestria-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-maestria");
+    }
+
+    function deletarMaestria(elem) {
+
+        if (ultimoM == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoM--;
+        consertarIds("tbody-maestria");
+    }
+
+
+    function adicionarHab() {
+
+        ultimoH++;
+
+        var table = document.getElementById("tbody-hab");
+
+        var tr = document.getElementById("tr-hab-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-hab");
+    }
+
+    function deletarHab(elem) {
+
+        if (ultimoH == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoH--;
+        consertarIds("tbody-hab");
+    }
+
+
+    function adicionarItem() {
+
+        ultimoI++;
+
+        var table = document.getElementById("tbody-inventario");
+
+        var tr = document.getElementById("tr-item-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-inventario");
+    }
+
+    function deletarItem(elem) {
+
+        if (ultimoI == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoI--;
+        consertarIds("tbody-inventario");
+    }
+
+
+    function consertarIds(id = "") {
+        let table = document.getElementById(id);
 
         for (i = 0; i < table.rows.length; i++) {
             let tr = table.rows[i];
             
             let id = tr.getAttribute("id");
-            tr.setAttribute("id", "tr-ved-"+(i + 1));
+            id = id.substring(0, id.lastIndexOf("-")+1);
+            tr.setAttribute("id", id+(i + 1));
             console.log(table.rows[i]);
 
             for (j = 0; j < (tr.children.length - 1); j++) {
@@ -296,8 +553,8 @@
                 let idLastCaractere = id.lastIndexOf("-");
                 let nameLastCaractere = name.lastIndexOf("-");
 
-                id = id.substring(0, 8) + i + id.substring(idLastCaractere);
-                name = name.substring(0, 8) + i + name.substring(idLastCaractere);
+                id = id.substring(0, id.indexOf("-")+1) + i + id.substring(idLastCaractere);
+                name = name.substring(0, name.indexOf("-")+1) + i + name.substring(idLastCaractere);
 
                 ultimoFilho.setAttribute("id", id)
                 ultimoFilho.setAttribute("name", name)

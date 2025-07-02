@@ -97,6 +97,12 @@ class HabilidadeForm(FlaskForm):
     nivel_max = IntegerField("Nivel Max")
     custo_pa = FloatField("Custo PA")
     custo_aa = FloatField("Custo AA")
+
+
+class ItensForm(FlaskForm):
+    nome = StringField("Nome")
+    desc = TextAreaField("Descricao")
+    tipo = SelectField(label="Tipo", choices=["Arma", "Item"])
     
 
 
@@ -105,6 +111,14 @@ class VeDForm(FlaskForm):
     desc = TextAreaField("Desc")
     custo = IntegerField("Custo")
     tipo = SelectField("tipo", choices=["V", "D"])
+    
+
+class MaestriasForm(FlaskForm):
+    nome = StringField("Nome: ")
+    atr = StringField("ATR: ")
+    nivel = IntegerField("Nivel: ")
+    exp = IntegerField("Exp: ")
+    desc = TextAreaField("Desc: ")
 
 
 class FichaSombrasDasAlmas(FlaskForm):
@@ -148,8 +162,18 @@ class FichaSombrasDasAlmas(FlaskForm):
                                                                ('coracao_curativo', 'Coração Curativo'),
                                                                ('lider_esperanca', 'Lider Esperança')])
     
-    habilidades = FieldList(FormField(HabilidadeForm), min_entries=1)
     van_des = FieldList(FormField(VeDForm), min_entries=1)
+    
+    personalidade = TextAreaField("Personalidade: ")
+    
+    maestrias = FieldList(FormField(MaestriasForm), label="Maestrias", min_entries=1);
+    
+    aparencia = TextAreaField(label="Aparencia: ")
+    historia = TextAreaField(label="Historia: ")
+    
+    habilidades = FieldList(FormField(HabilidadeForm), label="Habilidades", min_entries=1)
+    
+    inventario = FieldList(FormField(ItensForm), label="Inventario", min_entries=1)
 
     
 
