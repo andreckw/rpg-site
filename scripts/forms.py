@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField, TextAreaField, FieldList, FormField
 
 
 class PersonagemForm(FlaskForm):
@@ -89,7 +89,24 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
                                                                      "CON","COM", "PER", "MEN"])
     
+
+class HabilidadeForm(FlaskForm):
+    nome = StringField("Nome Habilidade")
+    desc = TextAreaField("Desc")
+    nivel_atual = IntegerField("Nivel Atual")
+    nivel_max = IntegerField("Nivel Max")
+    custo_pa = FloatField("Custo PA")
+    custo_aa = FloatField("Custo AA")
     
+
+
+class VeDForm(FlaskForm):
+    nome = StringField("Nome")
+    desc = TextAreaField("Desc")
+    custo = IntegerField("Custo")
+    tipo = SelectField("tipo", choices=["V", "D"])
+
+
 class FichaSombrasDasAlmas(FlaskForm):
     nome = StringField(label="Nome")
     idade = IntegerField(label="Idade")
@@ -117,5 +134,22 @@ class FichaSombrasDasAlmas(FlaskForm):
     pa_max = IntegerField("PA Max", default=65)
     aa_atual = IntegerField("AA", default=0)
     aa_max = IntegerField("AA Max", default=0)
+    
+    
+    soul = TextAreaField(label="Soul: ")
+    aura = TextAreaField(label="Aura: ")
+    estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
+                                                               ('mente_sagaz', 'Mente Sagaz'),
+                                                               ('pernas_ageis', 'Pernas Ageis'),
+                                                               ('peito_diamante', 'Peito de Diamante'),
+                                                               ('combate_especializado', 'Combate Especializado'),
+                                                               ('ser_silencio', 'Ser do Silêncio'),
+                                                               ('presenca_imponente', 'Presença Imponente'),
+                                                               ('coracao_curativo', 'Coração Curativo'),
+                                                               ('lider_esperanca', 'Lider Esperança')])
+    
+    habilidades = FieldList(FormField(HabilidadeForm), min_entries=1)
+    van_des = FieldList(FormField(VeDForm), min_entries=1)
 
     
+

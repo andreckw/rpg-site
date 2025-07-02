@@ -63,7 +63,7 @@
     <hr>
 
     <!-- Atributos -->
-     <div class="columns">
+    <div class="columns">
         <div class="column">
             <div class="field">
                 <h3 class="title is-3">
@@ -150,9 +150,161 @@
         </div>
 
         <div class="column">
+            <h3 class="title is-3">
+                Poder da Alma
+            </h3>
+
+            <div class="field">
+                <strong>
+                    {{ form.soul.label }}
+                </strong>
+                {{ form.soul(class="textarea") }}
+            </div>
+
+            <div class="field">
+                <strong>
+                    {{ form.aura.label }}
+                </strong>
+                {{ form.aura(class="textarea") }}
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+
+            <div class="field is-grouped">
+                <p class="control">
+                    {{ form.estilo_combate.label(class="title is-3") }}
+                    <br>
+                    <span class="select">
+                        {{ form.estilo_combate }}
+                    </span>
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="field">
+                <h3 class="title is-3">
+                    Vantagens e Desvantagens
+                </h3>
+
+                <button type="button" class="button is-primary" onclick="adicionarVantagem()">
+                    Adicionar V&D
+                </button>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Custo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-ved">
+                        {% for x in form.van_des %}
+                            
+                            <tr id="tr-ved-{{ loop.index }}">
+                                <td>{{ x.nome(class="input") }}</td>
+                                <td>
+                                    <p class="control">
+                                        <span class="select">
+                                            {{ x.tipo }}</td>
+                                        </span>
+                                    </p>
+                                <td>{{ x.desc(class="textarea") }}</td>
+                                <td>{{ x.custo(class="input") }}</td>
+                                <td>
+                                    <button type="button" class="button is-danger" onclick="deletarVantagem(this)">
+                                        <span class="icon material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             
         </div>
-     </div>
+        <div class="column">
+
+        </div>
+    </div>
 </form>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    let ultimoV = document.getElementById("tbody-ved").rows.length - 1;
+    function adicionarVantagem() {
+
+        ultimoV++;
+
+        var table = document.getElementById("tbody-ved");
+
+        var tr = document.getElementById("tr-ved-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds();
+    }
+
+    function deletarVantagem(elem) {
+
+        if (ultimoV == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoV--;
+        consertarIds();
+    }
+
+
+    function consertarIds() {
+        let table = document.getElementById("tbody-ved");
+
+        for (i = 0; i < table.rows.length; i++) {
+            let tr = table.rows[i];
+            
+            let id = tr.getAttribute("id");
+            tr.setAttribute("id", "tr-ved-"+(i + 1));
+            console.log(table.rows[i]);
+
+            for (j = 0; j < (tr.children.length - 1); j++) {
+                let td = tr.children[j];
+                let ultimoFilho = td.children[0];
+                
+                if (ultimoFilho.tagName == "P") {
+                    ultimoFilho = ultimoFilho.children[0].children[0];
+                }
+
+                let id = ultimoFilho.getAttribute("id");
+                let name = ultimoFilho.getAttribute("name");
+
+                // Sempre trocar no 7 ate o ultimoIndex
+                let idLastCaractere = id.lastIndexOf("-");
+                let nameLastCaractere = name.lastIndexOf("-");
+
+                id = id.substring(0, 8) + i + id.substring(idLastCaractere);
+                name = name.substring(0, 8) + i + name.substring(idLastCaractere);
+
+                ultimoFilho.setAttribute("id", id)
+                ultimoFilho.setAttribute("name", name)
+            }
+        }
+    }
+
+</script>
 
 {% endblock %}
