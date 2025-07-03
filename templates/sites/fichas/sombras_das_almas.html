@@ -34,7 +34,7 @@
         </p>
         <p class="control is-expanded">
             {{ form.nivel.label }}
-            {{ form.nivel(class="input") }}
+            {{ form.nivel(class="input", onchange="calcularPontosAtr()") }}
         </p>
         
     </div>
@@ -84,31 +84,31 @@
                         <tbody>
                             <tr>
                                 <td> {{ form.forca.label }} </td>
-                                <td> {{ form.forca(class="input") }} </td>
+                                <td> {{ form.forca(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.destreza.label }} </td>
-                                <td> {{ form.destreza(class="input") }} </td>
+                                <td> {{ form.destreza(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.saude.label }} </td>
-                                <td> {{ form.saude(class="input") }} </td>
+                                <td> {{ form.saude(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.conhecimento.label }} </td>
-                                <td> {{ form.conhecimento(class="input") }} </td>
+                                <td> {{ form.conhecimento(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.comunicacao.label }} </td>
-                                <td> {{ form.comunicacao(class="input") }} </td>
+                                <td> {{ form.comunicacao(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.percepcao.label }} </td>
-                                <td> {{ form.percepcao(class="input") }} </td>
+                                <td> {{ form.percepcao(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                             <tr>
                                 <td> {{ form.mente.label }} </td>
-                                <td> {{ form.mente(class="input") }} </td>
+                                <td> {{ form.mente(class="input", onchange="calcularPontosAtr()") }} </td>
                             </tr>
                         </tbody>
                     </table>
@@ -148,6 +148,10 @@
                     </table>
                 </div>
             </div>
+
+            <strong id="atr_restantes">
+                Atributos restantes: 39
+            </strong>
         </div>
 
         <div class="column">
@@ -461,6 +465,8 @@
         }
     };
 
+    calcularPontosAtr()
+
     function adicionarVantagem() {
 
         ultimoV++;
@@ -602,6 +608,49 @@
                 ultimoFilho.setAttribute("name", name)
             }
         }
+    }
+
+
+    function calcularPontosAtr() {
+
+        let pontos = 14;
+        let nivel = parseInt(document.getElementById("nivel").value);
+
+        for (i = 1; i < nivel + 1; i++) {
+            if (i == 1) {
+                pontos += 25; 
+            } else if (i >= 2 && i <= 5) {
+                pontos += 1;
+            } else if (i >= 6 && i <= 10) {
+                pontos += 2;
+            } else if (i >= 11 && i <= 20) {
+                pontos += 3;
+            } else if (i >= 21 && i <= 40) {
+                pontos += 4;
+            } else if (i >= 41 && i <= 50) {
+                pontos += 5;
+            }
+
+            if (i % 2 == 0 && i != 1) {
+                pontos += 7
+            }
+        }
+
+        let forca = parseInt(document.getElementById("forca").value);
+        let destreza = parseInt(document.getElementById("destreza").value);
+        let saude = parseInt(document.getElementById("saude").value);
+        let conhecimento = parseInt(document.getElementById("conhecimento").value);
+        let comunicacao = parseInt(document.getElementById("comunicacao").value);
+        let percepcao = parseInt(document.getElementById("percepcao").value);
+        let mente = parseInt(document.getElementById("mente").value);
+
+
+        
+        var todos_atr = forca + destreza + saude + conhecimento + comunicacao + percepcao + mente;
+
+        atr_restantes = pontos - todos_atr;
+
+        document.getElementById("atr_restantes").innerHTML = "Atributos restantes: " + atr_restantes;
     }
 
 </script>

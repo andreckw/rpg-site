@@ -127,7 +127,7 @@ class FichaSombrasDasAlmas(FlaskForm):
     idade = IntegerField(label="Idade")
     data_nascimento = DateField(label="Data Nascimento")
     
-    nivel = IntegerField(label="Nivel")
+    nivel = IntegerField(label="Nivel", default=1)
     jogador = StringField(label="Jogador")
     altura = FloatField(label="Altura (m)")
     sexo = SelectField(label="Sexo", choices=["Masculino", "Feminino", "Outro"])
