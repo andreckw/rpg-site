@@ -195,7 +195,6 @@ class SombraDasAlmas():
         for n in self.niveis:
             
             for v in self.estilo_combate["vitalidade"]:
-                print(v)
                 if n >= v["n_inicio"] and n <= v["n_final"]:
                     self.pv += v["valor"] + self.saude_nivel[n - 1]
                     break
