@@ -1,0 +1,658 @@
+{% extends "layouts/base.html" %}
+
+{% block titulo %} Ficha | Sombras das Almas {% endblock %}
+
+{% block tela %} Ficha - Sombras das Almas {% endblock %}
+
+{% block conteudo %}
+
+<div class="box">
+    Ficha de personagem do Sistema de RPG Sombras das Almas
+</div>
+
+<form action="#" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <!-- Personagem -->
+    <div class="field">
+        <h3 class="title is-3">
+            Personagem
+        </h3>
+    </div>
+
+    <div class="field is-grouped">
+        <p class="control is-expanded">
+            {{ form.nome.label }}
+            {{ form.nome(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.idade.label }}
+            {{ form.idade(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.data_nascimento.label }}
+            {{ form.data_nascimento(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.nivel.label }}
+            {{ form.nivel(class="input", onchange="calcularPontosAtr()") }}
+        </p>
+        
+    </div>
+    <div class="field is-grouped">
+        <p class="control is-expanded">
+            {{ form.jogador.label }}
+            {{ form.jogador(class="input") }}
+        </p>
+        <p class="control is-expanded">
+            {{ form.altura.label }}
+            {{ form.altura(class="input") }}
+        </p>
+        <p class="control">
+            {{ form.sexo.label }}
+            <br>
+            <span class="select">
+                {{ form.sexo }}
+            </span>
+        </p>
+        <p class="control is-expanded">
+            {{ form.peso.label }}
+            {{ form.peso(class="input") }}
+        </p>
+        
+    </div>
+
+    <hr>
+
+    <!-- Atributos -->
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <h3 class="title is-3">
+                    Atributos
+                </h3>
+            </div>
+
+            <div class="columns">
+                <div class="column field">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ATR</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> {{ form.forca.label }} </td>
+                                <td> {{ form.forca(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.destreza.label }} </td>
+                                <td> {{ form.destreza(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.saude.label }} </td>
+                                <td> {{ form.saude(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.conhecimento.label }} </td>
+                                <td> {{ form.conhecimento(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.comunicacao.label }} </td>
+                                <td> {{ form.comunicacao(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.percepcao.label }} </td>
+                                <td> {{ form.percepcao(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                            <tr>
+                                <td> {{ form.mente.label }} </td>
+                                <td> {{ form.mente(class="input", onchange="calcularPontosAtr()") }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="column">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Atual</th>
+                                <th>Max</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PV</td>
+                                <td> {{ form.pv(class="input") }} </td>
+                                <td> {{ form.pv_max(class="input") }} </td>
+                            </tr>
+                            <tr>
+                                <td>PB</td>
+                                <td> {{ form.pb(class="input") }} </td>
+                                <td> {{ form.pb_max(class="input") }} </td>
+                            </tr>
+                            <tr>
+                                <td>PA</td>
+                                <td> {{ form.pa(class="input") }} </td>
+                                <td> {{ form.pa_max(class="input") }} </td>
+                            </tr>
+                            <tr>
+                                <td>AA</td>
+                                <td> {{ form.aa(class="input") }} </td>
+                                <td> {{ form.aa_max(class="input") }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <strong id="atr_restantes">
+                Atributos restantes: 39
+            </strong>
+        </div>
+
+        <div class="column">
+            <h3 class="title is-3">
+                Poder da Alma
+            </h3>
+
+            <div class="field">
+                <strong>
+                    {{ form.soul.label }}
+                </strong>
+                {{ form.soul(class="textarea") }}
+            </div>
+
+            <div class="field">
+                <strong>
+                    {{ form.aura.label }}
+                </strong>
+                {{ form.aura(class="textarea") }}
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+
+            <div class="field is-grouped">
+                <p class="control">
+                    {{ form.estilo_combate.label(class="title is-3") }}
+                    <br>
+                    <span class="select">
+                        {{ form.estilo_combate }}
+                    </span>
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="field">
+                <h3 class="title is-3">
+                    Vantagens e Desvantagens
+                </h3>
+
+                <button type="button" class="button is-primary" onclick="adicionarVantagem()">
+                    Adicionar V&D
+                </button>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Custo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-ved">
+                        {% for x in form.van_des %}
+                            
+                            <tr id="tr-ved-{{ loop.index }}">
+                                <td>{{ x.nome(class="input") }}</td>
+                                <td>
+                                    <p class="control">
+                                        <span class="select">
+                                            {{ x.tipo }}</td>
+                                        </span>
+                                    </p>
+                                <td>{{ x.desc(class="textarea") }}</td>
+                                <td>{{ x.custo(class="input") }}</td>
+                                <td>
+                                    <button type="button" class="button is-danger" onclick="deletarVantagem(this)">
+                                        <span class="icon material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="column">
+
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.personalidade.label }}
+                </h3>
+                {{ form.personalidade(class="textarea") }}
+            </div>
+
+            <hr>
+
+
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.maestrias.label }}
+                </h3>
+
+                <button type="button" class="button is-primary" onclick="adicionarMaestria()">
+                    Adicionar Maestria
+                </button>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>ATR</th>
+                            <th>Descrição</th>
+                            <th>Exp</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-maestria">
+                        {% for m in form.maestrias %}
+                            
+                            <tr id="tr-maestria-{{ loop.index }}">
+                                <td>{{ m.nome(class="input") }}</td>
+                                <td>{{ m.atr(class="input") }}</td>
+                                <td>{{ m.desc(class="input") }}</td>
+                                <td>{{ m.exp(class="input") }}</td>
+                                <td>{{ m.nivel(class="input") }}</td>
+                                <td>
+                                    <button type="button" class="button is-danger" onclick="deletarMaestria(this)">
+                                        <span class="icon material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="columns">
+        <div class="column">
+            
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.historia.label }}
+                </h3>
+                {{ form.historia(class="textarea") }}
+            </div>
+
+        </div>
+        <div class="column">
+
+            <div class="field">
+                <h3 class="title is-3">
+                    {{ form.aparencia.label }}
+                </h3>
+                {{ form.aparencia(class="textarea") }}
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="field">
+        <h3 class="title is-3">
+            {{ form.habilidades.label }}
+        </h3>
+
+        <button type="button" class="button is-primary" onclick="adicionarHab()">
+            Adicionar Habilidade
+        </button>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th width="30%">Descrição/Efeito</th>
+                    <th>Nivel Atual</th>
+                    <th>Nivel Max</th>
+                    <th>Custo PA</th>
+                    <th>Custo AA</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-hab">
+                {% for h in form.habilidades %}
+                    
+                    <tr id="tr-hab-{{ loop.index }}">
+                        <td>{{ h.nome(class="input") }}</td>
+                        <td>{{ h.desc(class="input") }}</td>
+                        <td>{{ h.nivel_atual(class="input") }}</td>
+                        <td>{{ h.nivel_max(class="input") }}</td>
+                        <td>{{ h.custo_pa(class="input") }}</td>
+                        <td>{{ h.custo_aa(class="input") }}</td>
+                        <td>
+                            <button type="button" class="button is-danger" onclick="deletarHab(this)">
+                                <span class="icon material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div class="field">
+        <h3 class="title is-3">
+            {{ form.inventario.label }}
+        </h3>
+
+        <button type="button" class="button is-primary" onclick="adicionarItem()">
+            Adicionar Inventario
+        </button>
+
+        <table class="table" width="100%">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição/Efeito</th>
+                    <th>Tipo</th>
+                    <th>Dano/Adicional</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-inventario">
+                {% for i in form.inventario %}
+                    
+                    <tr id="tr-item-{{ loop.index }}">
+                        <td>{{ i.nome(class="input") }}</td>
+                        <td>{{ i.desc(class="input") }}</td>
+                        <td>
+                            <p class="control">
+                                <span class="select">
+                                    {{ i.tipo(class="input") }}
+                                </span>
+                            </p>
+                        </td>
+                        <td>{{ i.adi_dano(class="input") }}</td>
+                        <td>
+                            <button type="button" class="button is-danger" onclick="deletarItem(this)">
+                                <span class="icon material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                {{ form.exportar(class="button is-primary") }}
+            </div>
+        </div>
+        <div class="column" id="importar-personagem">
+            <div class="file is-info">
+                <label for="{{ form.arquivo.id }}" class="file-label">
+                    {{ form.arquivo(accept=".json", class="file-input") }}
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <span class="icon material-icons">
+                                arrow_circle_up
+                            </span>
+                        </span>
+                        <span class="file-label">
+                            Carregar arquivo do personagem
+                        </span>
+                    </span>
+                    <span class="file-name"> No file uploaded </span>
+                </label>
+            </div>
+            {{ form.importar(class="button is-primary") }}
+        </div>
+    </div>
+
+
+</form>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    let ultimoV = document.getElementById("tbody-ved").rows.length - 1;
+    let ultimoM = document.getElementById("tbody-maestria").rows.length - 1;
+    let ultimoH = document.getElementById("tbody-hab").rows.length - 1;
+    let ultimoI = document.getElementById("tbody-hab").rows.length - 1;
+
+    const fileInput = document.querySelector("#importar-personagem input[type=file]");
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+        const fileName = document.querySelector("#importar-personagem .file-name");
+        fileName.textContent = fileInput.files[0].name;
+        }
+    };
+
+    calcularPontosAtr()
+
+    function adicionarVantagem() {
+
+        ultimoV++;
+
+        var table = document.getElementById("tbody-ved");
+
+        var tr = document.getElementById("tr-ved-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-ved");
+    }
+
+    function deletarVantagem(elem) {
+
+        if (ultimoV == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoV--;
+        consertarIds("tbody-ved");
+    }
+
+
+    function adicionarMaestria() {
+
+        ultimoM++;
+
+        var table = document.getElementById("tbody-maestria");
+
+        var tr = document.getElementById("tr-maestria-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-maestria");
+    }
+
+    function deletarMaestria(elem) {
+
+        if (ultimoM == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoM--;
+        consertarIds("tbody-maestria");
+    }
+
+
+    function adicionarHab() {
+
+        ultimoH++;
+
+        var table = document.getElementById("tbody-hab");
+
+        var tr = document.getElementById("tr-hab-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-hab");
+    }
+
+    function deletarHab(elem) {
+
+        if (ultimoH == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoH--;
+        consertarIds("tbody-hab");
+    }
+
+
+    function adicionarItem() {
+
+        ultimoI++;
+
+        var table = document.getElementById("tbody-inventario");
+
+        var tr = document.getElementById("tr-item-1").cloneNode(true);
+
+        table.appendChild(tr);
+        consertarIds("tbody-inventario");
+    }
+
+    function deletarItem(elem) {
+
+        if (ultimoI == 0) {
+            return;
+        }
+
+        let td = elem.parentNode;
+        let tr = td.parentNode;
+
+        tr.remove();
+        ultimoI--;
+        consertarIds("tbody-inventario");
+    }
+
+
+    function consertarIds(id = "") {
+        let table = document.getElementById(id);
+
+        for (i = 0; i < table.rows.length; i++) {
+            let tr = table.rows[i];
+            
+            let id = tr.getAttribute("id");
+            id = id.substring(0, id.lastIndexOf("-")+1);
+            tr.setAttribute("id", id+(i + 1));
+            console.log(table.rows[i]);
+
+            for (j = 0; j < (tr.children.length - 1); j++) {
+                let td = tr.children[j];
+                let ultimoFilho = td.children[0];
+                
+                if (ultimoFilho.tagName == "P") {
+                    ultimoFilho = ultimoFilho.children[0].children[0];
+                }
+
+                let id = ultimoFilho.getAttribute("id");
+                let name = ultimoFilho.getAttribute("name");
+
+                // Sempre trocar no 7 ate o ultimoIndex
+                let idLastCaractere = id.lastIndexOf("-");
+                let nameLastCaractere = name.lastIndexOf("-");
+
+                id = id.substring(0, id.indexOf("-")+1) + i + id.substring(idLastCaractere);
+                name = name.substring(0, name.indexOf("-")+1) + i + name.substring(idLastCaractere);
+
+                ultimoFilho.setAttribute("id", id)
+                ultimoFilho.setAttribute("name", name)
+            }
+        }
+    }
+
+
+    function calcularPontosAtr() {
+
+        let pontos = 14;
+        let nivel = parseInt(document.getElementById("nivel").value);
+
+        for (i = 1; i < nivel + 1; i++) {
+            if (i == 1) {
+                pontos += 25; 
+            } else if (i >= 2 && i <= 5) {
+                pontos += 1;
+            } else if (i >= 6 && i <= 10) {
+                pontos += 2;
+            } else if (i >= 11 && i <= 20) {
+                pontos += 3;
+            } else if (i >= 21 && i <= 40) {
+                pontos += 4;
+            } else if (i >= 41 && i <= 50) {
+                pontos += 5;
+            }
+
+            if (i % 2 == 0 && i != 1) {
+                pontos += 7
+            }
+        }
+
+        let forca = parseInt(document.getElementById("forca").value);
+        let destreza = parseInt(document.getElementById("destreza").value);
+        let saude = parseInt(document.getElementById("saude").value);
+        let conhecimento = parseInt(document.getElementById("conhecimento").value);
+        let comunicacao = parseInt(document.getElementById("comunicacao").value);
+        let percepcao = parseInt(document.getElementById("percepcao").value);
+        let mente = parseInt(document.getElementById("mente").value);
+
+
+        
+        var todos_atr = forca + destreza + saude + conhecimento + comunicacao + percepcao + mente;
+
+        atr_restantes = pontos - todos_atr;
+
+        document.getElementById("atr_restantes").innerHTML = "Atributos restantes: " + atr_restantes;
+    }
+
+</script>
+
+{% endblock %}

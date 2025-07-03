@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField, TextAreaField, FieldList, FormField, SubmitField, FileField
 
 
 class PersonagemForm(FlaskForm):
@@ -88,5 +88,99 @@ class CaculadoraSombrasDasAlmas(FlaskForm):
     
     desvantagem_talento = SelectField(label="Sem Talento", choices=["FOR", "DES", "SAU",
                                                                      "CON","COM", "PER", "MEN"])
+    
+
+class HabilidadeForm(FlaskForm):
+    nome = StringField("Nome Habilidade")
+    desc = TextAreaField("Desc")
+    nivel_atual = IntegerField("Nivel Atual")
+    nivel_max = IntegerField("Nivel Max")
+    custo_pa = FloatField("Custo PA")
+    custo_aa = FloatField("Custo AA")
+
+
+class ItensForm(FlaskForm):
+    nome = StringField("Nome")
+    desc = TextAreaField("Descricao")
+    tipo = SelectField(label="Tipo", choices=["Arma", "Item"])
+    adi_dano = StringField(label="Dano/Adicional")
+
+
+
+class VeDForm(FlaskForm):
+    nome = StringField("Nome")
+    desc = TextAreaField("Desc")
+    custo = IntegerField("Custo")
+    tipo = SelectField("tipo", choices=["V", "D"])
+    
+
+class MaestriasForm(FlaskForm):
+    nome = StringField("Nome: ")
+    atr = StringField("ATR: ")
+    nivel = IntegerField("Nivel: ")
+    exp = IntegerField("Exp: ")
+    desc = TextAreaField("Desc: ")
+
+
+class FichaSombrasDasAlmas(FlaskForm):
+    nome = StringField(label="Nome")
+    idade = IntegerField(label="Idade")
+    data_nascimento = DateField(label="Data Nascimento")
+    
+    nivel = IntegerField(label="Nivel", default=1)
+    jogador = StringField(label="Jogador")
+    altura = FloatField(label="Altura (m)")
+    sexo = SelectField(label="Sexo", choices=["Masculino", "Feminino", "Outro"])
+    peso = FloatField(label="Peso (kg)")
+    
+    forca = IntegerField("FOR", default=2)
+    destreza = IntegerField("DES", default=2)
+    saude = IntegerField("SAU", default=2)
+    conhecimento = IntegerField("CON", default=2)
+    comunicacao = IntegerField("COM", default=2)
+    percepcao = IntegerField("PER", default=2)
+    mente = IntegerField("MEN", default=2)
+    
+    pv = IntegerField("PV", default=75)
+    pv_max = IntegerField("PV Max", default=75)
+    pb = IntegerField("PB", default=0)
+    pb_max = IntegerField("PB Max", default=0)
+    pa = IntegerField("PA", default=65)
+    pa_max = IntegerField("PA Max", default=65)
+    aa = IntegerField("AA", default=0)
+    aa_max = IntegerField("AA Max", default=0)
+    
+    
+    soul = TextAreaField(label="Soul: ")
+    aura = TextAreaField(label="Aura: ")
+    
+    estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
+                                                               ('mente_sagaz', 'Mente Sagaz'),
+                                                               ('pernas_ageis', 'Pernas Ageis'),
+                                                               ('peito_diamante', 'Peito de Diamante'),
+                                                               ('combate_especializado', 'Combate Especializado'),
+                                                               ('ser_silencio', 'Ser do Silêncio'),
+                                                               ('presenca_imponente', 'Presença Imponente'),
+                                                               ('coracao_curativo', 'Coração Curativo'),
+                                                               ('lider_esperanca', 'Lider Esperança')])
+    
+    van_des = FieldList(FormField(VeDForm), min_entries=1)
+    
+    personalidade = TextAreaField("Personalidade: ")
+    
+    maestrias = FieldList(FormField(MaestriasForm), label="Maestrias", min_entries=1);
+    
+    aparencia = TextAreaField(label="Aparencia: ")
+    historia = TextAreaField(label="Historia: ")
+    
+    habilidades = FieldList(FormField(HabilidadeForm), label="Habilidades", min_entries=1)
+    
+    inventario = FieldList(FormField(ItensForm), label="Inventario", min_entries=1)
+    
+    exportar = SubmitField(label="Salvar Ficha")
+    
+    arquivo = FileField(label="Arquivo")
+    importar = SubmitField(label="Importar Ficha")
 
     
+
