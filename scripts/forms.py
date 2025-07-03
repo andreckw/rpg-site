@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField, TextAreaField, FieldList, FormField
+from wtforms import StringField, IntegerField, DecimalField, BooleanField, SelectField, SelectMultipleField, FloatField, DateField, TextAreaField, FieldList, FormField, SubmitField, FileField
 
 
 class PersonagemForm(FlaskForm):
@@ -103,7 +103,8 @@ class ItensForm(FlaskForm):
     nome = StringField("Nome")
     desc = TextAreaField("Descricao")
     tipo = SelectField(label="Tipo", choices=["Arma", "Item"])
-    
+    adi_dano = StringField(label="Dano/Adicional")
+
 
 
 class VeDForm(FlaskForm):
@@ -140,18 +141,19 @@ class FichaSombrasDasAlmas(FlaskForm):
     percepcao = IntegerField("PER", default=2)
     mente = IntegerField("MEN", default=2)
     
-    pv_atual = IntegerField("PV", default=75)
+    pv = IntegerField("PV", default=75)
     pv_max = IntegerField("PV Max", default=75)
-    pb_atual = IntegerField("PB", default=0)
+    pb = IntegerField("PB", default=0)
     pb_max = IntegerField("PB Max", default=0)
-    pa_atual = IntegerField("PA", default=65)
+    pa = IntegerField("PA", default=65)
     pa_max = IntegerField("PA Max", default=65)
-    aa_atual = IntegerField("AA", default=0)
+    aa = IntegerField("AA", default=0)
     aa_max = IntegerField("AA Max", default=0)
     
     
     soul = TextAreaField(label="Soul: ")
     aura = TextAreaField(label="Aura: ")
+    
     estilo_combate = SelectField("Estilo de Combate", choices=[('punho_forte', 'Punho Forte'),
                                                                ('mente_sagaz', 'Mente Sagaz'),
                                                                ('pernas_ageis', 'Pernas Ageis'),
@@ -174,6 +176,11 @@ class FichaSombrasDasAlmas(FlaskForm):
     habilidades = FieldList(FormField(HabilidadeForm), label="Habilidades", min_entries=1)
     
     inventario = FieldList(FormField(ItensForm), label="Inventario", min_entries=1)
+    
+    exportar = SubmitField(label="Salvar Ficha")
+    
+    arquivo = FileField(label="Arquivo")
+    importar = SubmitField(label="Importar Ficha")
 
     
 

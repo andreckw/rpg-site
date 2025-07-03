@@ -10,7 +10,8 @@
     Ficha de personagem do Sistema de RPG Sombras das Almas
 </div>
 
-<form action="#" method="post">
+<form action="#" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <!-- Personagem -->
     <div class="field">
         <h3 class="title is-3">
@@ -125,22 +126,22 @@
                         <tbody>
                             <tr>
                                 <td>PV</td>
-                                <td> {{ form.pv_atual(class="input") }} </td>
+                                <td> {{ form.pv(class="input") }} </td>
                                 <td> {{ form.pv_max(class="input") }} </td>
                             </tr>
                             <tr>
                                 <td>PB</td>
-                                <td> {{ form.pb_atual(class="input") }} </td>
+                                <td> {{ form.pb(class="input") }} </td>
                                 <td> {{ form.pb_max(class="input") }} </td>
                             </tr>
                             <tr>
                                 <td>PA</td>
-                                <td> {{ form.pa_atual(class="input") }} </td>
+                                <td> {{ form.pa(class="input") }} </td>
                                 <td> {{ form.pa_max(class="input") }} </td>
                             </tr>
                             <tr>
                                 <td>AA</td>
-                                <td> {{ form.aa_atual(class="input") }} </td>
+                                <td> {{ form.aa(class="input") }} </td>
                                 <td> {{ form.aa_max(class="input") }} </td>
                             </tr>
                         </tbody>
@@ -194,7 +195,7 @@
                     Adicionar V&D
                 </button>
 
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -253,7 +254,7 @@
                     Adicionar Maestria
                 </button>
 
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -325,7 +326,7 @@
             Adicionar Habilidade
         </button>
 
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -372,12 +373,13 @@
             Adicionar Inventario
         </button>
 
-        <table>
+        <table class="table" width="100%">
             <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Descrição/Efeito</th>
                     <th>Tipo</th>
+                    <th>Dano/Adicional</th>
                     <th></th>
                 </tr>
             </thead>
@@ -394,6 +396,7 @@
                                 </span>
                             </p>
                         </td>
+                        <td>{{ i.adi_dano(class="input") }}</td>
                         <td>
                             <button type="button" class="button is-danger" onclick="deletarItem(this)">
                                 <span class="icon material-icons">
@@ -407,6 +410,37 @@
             </tbody>
         </table>
     </div>
+
+    <hr>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                {{ form.exportar(class="button is-primary") }}
+            </div>
+        </div>
+        <div class="column" id="importar-personagem">
+            <div class="file is-info">
+                <label for="{{ form.arquivo.id }}" class="file-label">
+                    {{ form.arquivo(accept=".json", class="file-input") }}
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <span class="icon material-icons">
+                                arrow_circle_up
+                            </span>
+                        </span>
+                        <span class="file-label">
+                            Carregar arquivo do personagem
+                        </span>
+                    </span>
+                    <span class="file-name"> No file uploaded </span>
+                </label>
+            </div>
+            {{ form.importar(class="button is-primary") }}
+        </div>
+    </div>
+
+
 </form>
 
 {% endblock %}
@@ -418,6 +452,14 @@
     let ultimoM = document.getElementById("tbody-maestria").rows.length - 1;
     let ultimoH = document.getElementById("tbody-hab").rows.length - 1;
     let ultimoI = document.getElementById("tbody-hab").rows.length - 1;
+
+    const fileInput = document.querySelector("#importar-personagem input[type=file]");
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+        const fileName = document.querySelector("#importar-personagem .file-name");
+        fileName.textContent = fileInput.files[0].name;
+        }
+    };
 
     function adicionarVantagem() {
 
