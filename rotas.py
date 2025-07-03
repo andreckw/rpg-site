@@ -6,6 +6,7 @@ from scripts.personagem import criarpersonagem
 import json
 import tempfile
 import os
+import datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "61aecb89-f2b8-46b9-a85a-c05db0dd2e06"
@@ -59,7 +60,9 @@ def ficha_sombras_das_almas():
             dados_export = {}
             
             for k, v in form.data.items():
-                if k != "arquivo" and k != "importar" and k != "csrf_token" and k != "exportar":
+                if isinstance(v, (datetime.date, datetime.datetime)):
+                  dados_export[k] = v.isoformat()
+                elif k != "arquivo" and k != "importar" and k != "csrf_token" and k != "exportar":
                     dados_export[k] = v
 
             json.dump(dados_export, f, ensure_ascii=False)
@@ -80,6 +83,11 @@ def ficha_sombras_das_almas():
         
         if "json" in filename:
             dados = json.load(a.stream)
+            
+            for k, v in dados.items():
+                if k == "data_nascimento":
+                    dados[k] = datetime.date.fromisoformat(v)
+            
             form = FichaSombrasDasAlmas(formdata=None, data=dados)
     
     
