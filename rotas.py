@@ -24,8 +24,7 @@ def index():
 def personagem():
     form = PersonagemForm()
     new_personagem = None
-    
-    if form.validate_on_submit() and request.method == 'POST':
+    if request.method == 'POST':
         new_personagem = criarpersonagem(form)
         form.genero.data = new_personagem.genero
         form.cabelo_tipo.data = new_personagem.cabelo_tipo
