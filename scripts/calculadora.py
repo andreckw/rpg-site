@@ -192,23 +192,33 @@ class SombraDasAlmas():
         return
 
     def gerar_pv(self):
-        for n in self.niveis:
+        niveis = self.niveis
+        if niveis[0] != 1:
+            niveis = niveis[1:]
+        i = 0
+        for n in niveis:
             
             for v in self.estilo_combate["vitalidade"]:
                 if n >= v["n_inicio"] and n <= v["n_final"]:
-                    self.pv += v["valor"] + self.saude_nivel[n - 1]
+                    self.pv += v["valor"] + self.saude_nivel[i]
                     break
+            i+=1
 
 
     def gerar_pa(self):
-        for n in self.niveis:
+        niveis = self.niveis
+        if niveis[0] != 1:
+            niveis = niveis[1:]
+        i = 0
+        for n in niveis:
             
             for m in self.estilo_combate["energia"]:
                 if n >= m["n_inicio"] and n <= m["n_final"]:
-                    self.pa += m["valor"] + self.mente_nivel[n - 1]
+                    self.pa += m["valor"] + self.mente_nivel[i]
                     if n == 1 and self.pouco_folego:
                         self.pa -= (self.pa * 0.25)
                     break
+            i+=1
     
     
     def gerar_pb(self):
@@ -360,21 +370,23 @@ class SombraDasAlmas():
         
         for v in self.vantagens:
             if v == "litros_sangue":
-                self.pv += 15
+                if self.niveis[0] == 1:
+                    self.pv += 15
                 
                 n_final = self.nivel_atual
                 
-                while n_final > 1:
+                while n_final > 1 and self.nivel_atual <= n_final:
                     self.pv += 5
                     n_final -= 1
                     
             elif v == "incansavel":
-                self.pa += 15
+                if self.niveis[0] == 1:
+                    self.pa += 15
                 
                 n_final = self.nivel_atual
                 
-                while n_final > 1:
-                    self.pa += 5
+                while n_final > 1 and self.nivel_atual <= n_final:
+                    self.pa += 2
                     n_final -= 1
                 
             elif v == "aura_monstruosa":
