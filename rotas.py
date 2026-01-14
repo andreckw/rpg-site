@@ -16,7 +16,7 @@ csrf.init_app(app)
 @app.route("/", methods=['GET'])
 def index():
 
-    return render_template("/sites/index.html")
+    return render_template("/views/index.html")
 
 
 @app.route("/personagem", methods=['GET', 'POST'])
@@ -30,7 +30,11 @@ def personagem():
         form.olhos_formato.data = new_personagem.olhos_formato
         form.tom_pele.data = new_personagem.tom_pele
 
-    return render_template("/sites/personagem.html", form=form, new_personagem=new_personagem)
+    return render_template("/views/personagem.html", form=form, new_personagem=new_personagem)
+
+@app.route("/ficha/grimoriodocoracao", methods=["GET", "POST"])
+def ficha_grimorio_do_coracao():
+    return render_template("/views/fichas/grimorio_do_coracao.html")
 
 if __name__ == "__main__":
     app.run()

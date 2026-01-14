@@ -22,9 +22,6 @@ Se estiver usando VSCode use os comandos no terminal, pois ele não cria e ativa
 
 ## Todos as bibliotecas python em uma execução
 ```shell
-    pip install Flask;
-    pip install -U Flask-WTF;
-    pip install faker;
-    pip install webcolors
+    pip install -r requirementos.txt
 ```
 
