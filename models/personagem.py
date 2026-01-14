@@ -1,4 +1,4 @@
-from scripts.forms import PersonagemForm
+from forms.personagem_form import PersonagemForm
 import random
 from faker import Faker
 from webcolors import names
