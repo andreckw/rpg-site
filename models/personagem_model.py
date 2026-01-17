@@ -4,7 +4,7 @@ from faker import Faker
 from webcolors import names
 
 
-class Personagem:
+class PersonagemModel:
     nome = ""
     raca = ""
     genero = ""

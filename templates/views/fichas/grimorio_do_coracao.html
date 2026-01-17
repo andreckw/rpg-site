@@ -6,17 +6,624 @@
 
 {% block conteudo %}
 
-<div class="box">
-
-</div>
-
 <form action="">
-    <div class="field">
-        <p class="control is-expanded">
-            <label for="">PV</label>
-            <input class="input" type="text">
-        </p>
+    {{ form.csrf_token }}
+
+    <div class="tabs is-centered is-boxed">
+        <ul>
+            <li class="is-active">
+                <a href="#tab_geral" onclick="alterarTab(0)">Geral</a>
+            </li>
+            <li>
+                <a href="#tab_personagem" onclick="alterarTab(1)">Personagem</a>
+            </li>
+        </ul>
     </div>
+
+    <div id="tab_geral" name="tabs">
+
+        <div class="field is-grouped is-grouped-centered">
+            <div class="control is-expanded">
+                {{ form.ficha_personagem.personagem.label(class="label") }}
+                {{ form.ficha_personagem.personagem(class="input", id="personagem-nome-1",
+                onchange="espelharNome(this)") }}
+            </div>
+
+            <div class="control is-expanded">
+                <div class="label">{{ form.classe.label(class="label") }}</div>
+                {{ form.classe(class="input") }}
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+                <div class="label">{{ form.nivel.label(class="label") }}</div>
+                {{ form.nivel(class="input") }}
+            </div>
+
+            <div class="control is-expanded">
+                <div class="label">{{ form.arcana.label(class="label") }}</div>
+                {{ form.arcana(class="input") }}
+            </div>
+
+            <div class="control is-expanded">
+                <div class="label">{{ form.jogador.label(class="label") }}</div>
+                {{ form.jogador(class="input") }}
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="columns">
+            <div class="column">
+
+                <b>HABILIDADES DE COMBATE</b>
+                <hr>
+
+                <div class="fixed-grid has-3-cols grid">
+                    <div class="cell control">
+                        <div class="label">{{ form.forca.label(class="label") }}</div>
+                        {{ form.forca(class="input") }}
+                    </div>
+
+                    <div class="cell control">
+                        <div class="label">{{ form.tec.label(class="label") }}</div>
+                        {{ form.tec(class="input") }}
+                    </div>
+
+                    <div class="cell control">
+                        <div class="label">{{ form.vit.label(class="label") }}</div>
+                        {{ form.vit(class="input") }}
+                    </div>
+
+                    <div class="cell control">
+                        <div class="label">{{ form.mag.label(class="label") }}</div>
+                        {{ form.mag(class="input") }}
+                    </div>
+
+                    <div class="cell control">
+                        <div class="label">{{ form.agi.label(class="label") }}</div>
+                        {{ form.agi(class="input") }}
+                    </div>
+
+                    <div class="cell control">
+                        <div class="label">{{ form.sor.label(class="label") }}</div>
+                        {{ form.sor(class="input") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        {{ form.pv.label(class="label") }}
+                        {{ form.pv(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.energia.label(class="label") }}
+                        {{ form.energia(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        {{ form.rd.label(class="label") }}
+                        {{ form.rd(class="input", ) }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.cond.label(class="label") }}
+                        {{ form.cond(class="textarea", rows=5, cols=22) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="columns">
+            <div class="column">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>PTS</th>
+                            <th>TIER</th>
+                            <th>TITULO</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>CONHECIMENTO</td>
+                            <td>{{ form.hab_soc_con_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_con_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_con_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>DISCIPLINA</td>
+                            <td>{{ form.hab_soc_dis_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_dis_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_dis_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>EMPATIA</td>
+                            <td>{{ form.hab_soc_emp_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_emp_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_emp_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>CHARME</td>
+                            <td>{{ form.hab_soc_cha_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_cha_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_cha_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>EXPRESSÃO</td>
+                            <td>{{ form.hab_soc_exp_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_exp_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_exp_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>CORAGEM</td>
+                            <td>{{ form.hab_soc_cor_pts(class="input") }}</td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_cor_tier }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="select">
+                                    {{ form.hab_soc_cor_titulo }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    {{ form.pts_aspecto.label(class="label") }}
+                    <div class="control">
+                        {{ form.pts_aspecto(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    {{ form.aspectos.label(class="label") }}
+                    <div class="control">
+                        {{ form.aspectos(class="textarea", rows=10) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <b>PERSONA</b>
+
+        <div class="columns">
+            <div class="column">
+                <div class="field is-grouped">
+
+                    <div class="control">
+                        {{ form.persona_nome.label(class="label") }}
+                        {{ form.persona_nome(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.persona_nv.label(class="label") }}
+                        {{ form.persona_nv(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.persona_pm.label(class="label") }}
+                        {{ form.persona_pm(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        {{ form.persona_conv.label(class="label") }}
+                        {{ form.persona_conv(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        {{ form.persona_hab_natural.label(class="label") }}
+                        {{ form.persona_hab_natural(class="textarea", rows=2) }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        {{ form.arma_nome.label(class="label") }}
+                        {{ form.arma_nome(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.arma_dano.label(class="label") }}
+                        {{ form.arma_dano(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.arma_alc.label(class="label") }}
+                        {{ form.arma_alc(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.arma_efe.label(class="label") }}
+                        {{ form.arma_efe(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        {{ form.armadura_nome.label(class="label") }}
+                        {{ form.armadura_nome(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.armadura_rd.label(class="label") }}
+                        {{ form.armadura_rd(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.armadura_efe.label(class="label") }}
+                        {{ form.armadura_efe(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        {{ form.acessorio.label(class="label") }}
+                        {{ form.acessorio(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.acessorio_efe.label(class="label") }}
+                        {{ form.acessorio_efe(class="input") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+
+                <b>TIPOS</b>
+                <div class="field">
+
+                    <div class="fixed-grid">
+                        <div class="grid">
+                            {% for t in form.persona_tipos %}
+                            <div class="cell">
+                                {{ t(class="input") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="field ">
+                    <b> Resistencias </b>
+                    <div class="fixed-grid has-3-cols">
+                        <div class="grid">
+                            {% for r in form.persona_res %}
+                            <div class="cell">
+                                {{ form.nomes_resistencias[loop.index -1] }}
+                                {{ r(class="input") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="is-hidden" id="tab_personagem" name="tabs">
+        <div class="columns">
+            <div class="column is-one-quarter">
+                {{ form.ficha_personagem.retrato.label(class="label") }}
+                <div class="field">
+                    <div class="file">
+                        <label class="file-label">
+                            {{ form.ficha_personagem.retrato(class="file-input") }}
+                            <span class="file-cta">
+                                <span class="file-label"> Escolha o retrato </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        {{ form.ficha_personagem.personagem.label(class="label") }}
+                        {{ form.ficha_personagem.personagem(class="input", id="personagem-nome-2") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.ficha_personagem.exp.label(class="label") }}
+                        {{ form.ficha_personagem.exp(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+
+                    <div class="control is-expanded">
+                        {{ form.ficha_personagem.ocupacao.label(class="label") }}
+                        {{ form.ficha_personagem.ocupacao(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.ficha_personagem.skill.label(class="label") }}
+                        {{ form.ficha_personagem.skill(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.ficha_personagem.pr.label(class="label") }}
+                        {{ form.ficha_personagem.pr(class="input") }}
+                    </div>
+
+                </div>
+
+                <div class="field">
+                    <div class="columns">
+                        <div class="column is-three-quarters">
+
+                            <div class="fixed-grid has-auto-count">
+                                <div class="grid">
+                                    {% for bt in form.ficha_personagem.blocos_trab %}
+                                    <div class="cell">
+                                        {{ form.ficha_personagem.nome_blocos_trabalhos[loop.index-1] }}
+                                        {{ bt }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="control">
+                                {{ form.ficha_personagem.pr_bloco.label(class="label") }}
+                                {{ form.ficha_personagem.pr_bloco(class="input") }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="columns">
+            <div class="column is-two-thirds">
+                <div class="field is-grouped">
+                    <div class="control">
+                        {{ form.ficha_personagem.atq_secudario.label(class="label") }}
+                        {{ form.ficha_personagem.atq_secudario(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.ficha_personagem.atq_dano.label(class="label") }}
+                        {{ form.ficha_personagem.atq_dano(class="input") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.ficha_personagem.atq_alc.label(class="label") }}
+                        {{ form.ficha_personagem.atq_alc(class="input") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.ficha_personagem.atq_efe.label(class="label") }}
+                        {{ form.ficha_personagem.atq_efe(class="input") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        {{ form.ficha_personagem.equip_misto.label(class="label") }}
+                        {{ form.ficha_personagem.equip_misto(class="textarea") }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="field">
+                    {{ form.ficha_personagem.personas.label(class="label") }}
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ARCANA
+                                </th>
+                                <th>
+                                    NOME
+                                </th>
+                                <th>
+                                    Nv.
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in form.ficha_personagem.personas %}
+                            <tr>
+                                <td>
+                                    {{ p.nome(class="input") }}
+                                </td>
+                                <td>
+                                    {{ p.arcana(class="input") }}
+                                </td>
+                                <td width="20%">
+                                    {{ p.nivel(class="input") }}
+                                </td>
+                                <td>
+                                    botao
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr>
+
+                <div class="field">
+                    <table class="table">
+                        <thead>
+                            <th>
+                                Nome/Descrição
+                            </th>
+                            <th>
+                                Qtd
+                            </th>
+                        </thead>
+                        <tbody>
+                            {% for i in form.ficha_personagem.itens %}
+                                <tr>
+                                    <td width="85%">
+                                        {{ i.nome(class="input") }}
+                                    </td>
+                                    <td>
+                                        {{ i.qtd(class="input") }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr>
+
+                <div class="field">
+                    <div class="control">
+                        {{ form.ficha_personagem.notas.label(class="label") }}
+                        {{ form.ficha_personagem.notas(class="textarea") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <b>Feitos</b>
+
+                    <div class="fixed-grid">
+                        <div class="grid">
+                            {% for f in form.ficha_personagem.feitos %}
+                            <div class="cell">
+                                {{ form.ficha_personagem.nome_feitos[loop.index-1] }}
+                                {{ f(class="input") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ARCANA
+                                </th>
+                                <th>
+                                    NOME
+                                </th>
+                                <th>
+                                    RANK
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for c in form.ficha_personagem.confidents %}
+                                <tr>
+                                    <td>{{ form.ficha_personagem.nome_confidents[loop.index-1] }}</td>
+                                    <td>{{ c.nome(class="input") }}</td>
+                                    <td width="10%">{{ c.rank(class="input") }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </form>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    function espelharNome(ev) {
+        let nome1 = document.getElementById("personagem-nome-1");
+        let nome2 = document.getElementById("personagem-nome-2");
+
+        if (ev == nome1) {
+            nome2.setAttribute("value", ev.value);
+        } else {
+            nome1.setAttribute("value", ev.value);
+        }
+    }
+</script>
 {% endblock %}

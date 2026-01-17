@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, send_file
 from flask_wtf.csrf import CSRFProtect
 from forms.personagem_form import PersonagemForm
-from models.personagem import criarpersonagem
+from forms.ficha_grimorio_do_coracao_form import FichaGrimorioDoCoracao
+from models.personagem_model import criarpersonagem
 import json
 import tempfile
 import os
@@ -34,7 +35,9 @@ def personagem():
 
 @app.route("/ficha/grimoriodocoracao", methods=["GET", "POST"])
 def ficha_grimorio_do_coracao():
-    return render_template("/views/fichas/grimorio_do_coracao.html")
+    form = FichaGrimorioDoCoracao()
+
+    return render_template("/views/fichas/grimorio_do_coracao.html", form=form)
 
 if __name__ == "__main__":
     app.run()

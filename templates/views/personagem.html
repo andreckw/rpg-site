@@ -183,20 +183,5 @@
 {% endblock %}
 
 {% block js %}
-<script>
-    function alterarTab(id) {
-        let docTab = document.getElementsByName("tabs");
-        let tabs = document.getElementsByTagName("li");
 
-        for (let i = 0; i < tabs.length; i++) {
-            tabs[i].setAttribute("class", "");
-            docTab[i].setAttribute("class", "is-hidden");
-
-            if (id == i) {
-                tabs[i].setAttribute("class", "is-active");
-                docTab[i].setAttribute("class", "");
-            }
-        }
-    }
-</script>
 {% endblock %}
