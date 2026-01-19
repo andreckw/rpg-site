@@ -1,5 +1,10 @@
 {% extends "layouts/base.html" %}
 
+{% block style %}
+<style>
+</style>
+{% endblock %}
+
 {% block titulo %} Calculadora {% endblock %}
 
 {% block tela %} Grimório do coração {% endblock %}
@@ -25,8 +30,7 @@
         <div class="field is-grouped is-grouped-centered">
             <div class="control is-expanded">
                 {{ form.ficha_personagem.personagem.label(class="label") }}
-                {{ form.ficha_personagem.personagem(class="input", id="personagem-nome-1",
-                onchange="espelharNome(this)") }}
+                {{ form.ficha_personagem.personagem(class="input", onchange="espelharCampo(this)") }}
             </div>
 
             <div class="control is-expanded">
@@ -255,18 +259,18 @@
                 <div class="field is-grouped">
 
                     <div class="control">
-                        {{ form.persona_nome.label(class="label") }}
-                        {{ form.persona_nome(class="input") }}
+                        {{ form.ficha_personas[0].nome.label(class="label") }}
+                        {{ form.ficha_personas[0].nome(class="input") }}
                     </div>
 
                     <div class="control is-expanded">
-                        {{ form.persona_nv.label(class="label") }}
-                        {{ form.persona_nv(class="input") }}
+                        {{ form.ficha_personas[0].nivel.label(class="label") }}
+                        {{ form.ficha_personas[0].nivel(class="input") }}
                     </div>
 
                     <div class="control is-expanded">
-                        {{ form.persona_pm.label(class="label") }}
-                        {{ form.persona_pm(class="input") }}
+                        {{ form.ficha_personas[0].pm.label(class="label") }}
+                        {{ form.ficha_personas[0].pm(class="input") }}
                     </div>
                 </div>
 
@@ -279,12 +283,44 @@
 
                 <div class="field">
                     <div class="control">
-                        {{ form.persona_hab_natural.label(class="label") }}
-                        {{ form.persona_hab_natural(class="textarea", rows=2) }}
+                        {{ form.ficha_personas[0].hab_natural.label(class="label") }}
+                        {{ form.ficha_personas[0].hab_natural(class="textarea", rows=2) }}
                     </div>
                 </div>
 
                 <hr>
+
+                <b>TIPOS</b>
+                <div class="field">
+
+                    <div class="fixed-grid">
+                        <div class="grid">
+                            {% for t in form.ficha_personas[0].tipos %}
+                            <div class="cell">
+                                {{ t(class="input") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="field ">
+                    <b> Resistencias </b>
+                    <div class="fixed-grid has-3-cols">
+                        <div class="grid">
+                            {% for r in form.ficha_personas[0].res %}
+                            <div class="cell">
+                                {{ form.nomes_resistencias[loop.index -1] }}
+                                {{ r(class="input") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
 
                 <div class="field is-grouped">
                     <div class="control is-expanded">
@@ -336,38 +372,6 @@
                         {{ form.acessorio_efe(class="input") }}
                     </div>
                 </div>
-            </div>
-
-            <div class="column">
-
-                <b>TIPOS</b>
-                <div class="field">
-
-                    <div class="fixed-grid">
-                        <div class="grid">
-                            {% for t in form.persona_tipos %}
-                            <div class="cell">
-                                {{ t(class="input") }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="field ">
-                    <b> Resistencias </b>
-                    <div class="fixed-grid has-3-cols">
-                        <div class="grid">
-                            {% for r in form.persona_res %}
-                            <div class="cell">
-                                {{ form.nomes_resistencias[loop.index -1] }}
-                                {{ r(class="input") }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -393,7 +397,7 @@
                 <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.ficha_personagem.personagem.label(class="label") }}
-                        {{ form.ficha_personagem.personagem(class="input", id="personagem-nome-2") }}
+                        {{ form.ficha_personagem.personagem(class="input", onchange="espelharCampo(this)") }}
                     </div>
 
                     <div class="control">
@@ -517,7 +521,9 @@
                                     {{ p.nivel(class="input") }}
                                 </td>
                                 <td>
-                                    botao
+                                    <button type="button" class="js-modal-trigger" data-target="persona-0">
+                                        Editar
+                                    </button>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -609,21 +615,83 @@
         </div>
     </div>
 
+    <div class="modal is-large" id="persona-0">
+        <div class="modal-background"></div>
+
+        <div class="modal-content">
+            <div class="box">
+                <h3 class="is-title title-3">
+                    Persona
+                </h3>
+
+                <hr>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        {{ form.ficha_personas[0].nome.label(class="label") }}
+                        {{ form.ficha_personas[0].nome(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+
+                    <div class="control">
+                        {{ form.ficha_personas[0].arcana.label(class="label") }}
+                        {{ form.ficha_personas[0].arcana(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.ficha_personas[0].nivel.label(class="label") }}
+                        {{ form.ficha_personas[0].nivel(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ form.ficha_personas[0].pm.label(class="label") }}
+                        {{ form.ficha_personas[0].pm(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        {{ form.ficha_personas[0].hab_natural.label(class="label") }}
+                        {{ form.ficha_personas[0].hab_natural(class="textarea", onchange="espelharCampo(this)", rows=2) }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <b>TIPOS</b>
+                <div class="field">
+
+                    <div class="fixed-grid">
+                        <div class="grid">
+                            {% for t in form.ficha_personas[0].tipos %}
+                            <div class="cell">
+                                {{ t(class="input", onchange="espelharCampo(this)") }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="modal-close is-large" aria-label="close"></button>
+    </div>
 </form>
 
 {% endblock %}
 
 {% block js %}
 <script>
-    function espelharNome(ev) {
-        let nome1 = document.getElementById("personagem-nome-1");
-        let nome2 = document.getElementById("personagem-nome-2");
+    function espelharCampo(ev) {
+        let campos = document.getElementsByName(ev.name);
 
-        if (ev == nome1) {
-            nome2.setAttribute("value", ev.value);
-        } else {
-            nome1.setAttribute("value", ev.value);
-        }
+        for (let index = 0; index < campos.length; index++) {
+
+            if (ev != campos[index]) {
+                campos[index].setAttribute("value", ev.value);
+            }
+            
+        };
     }
 </script>
 {% endblock %}

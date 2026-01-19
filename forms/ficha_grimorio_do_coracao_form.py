@@ -1,10 +1,44 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, TextAreaField, FloatField, FileField, BooleanField
 
+class MagiaGDC(FlaskForm):
+    magia = StringField(label="MAGIA")
+    tipo = StringField(label="TIPO")
+    cat = StringField(label="CAT.")
+    tier = StringField(label="TIER")
+    alvo = StringField(label="ALVO")
+    efeito = TextAreaField(label="ALVO")
+    usos = IntegerField(label="USOS")
+    usos_max = IntegerField(label="USOS MAX")
+    repr = IntegerField(label="REPR")
+
 class PersonaFichaGDC(FlaskForm):
     nome = StringField(label="NOME")
     arcana = StringField(label="ARCANA")
     nivel = IntegerField(label="Nv.")
+    pm = IntegerField(label="PM")
+
+    hab_natural = TextAreaField(label="HAB. NATURAL")
+
+    tipos = FieldList(StringField(), label="Tipos", min_entries=4, max_entries=4)
+    res = FieldList(StringField(), label="RESISTENCIAS", min_entries=11, max_entries=11)
+
+    forca = IntegerField(label="FOR")
+    tec = IntegerField(label="TEC")
+    vit = IntegerField(label="VIT")
+    mag = IntegerField(label="MAG")
+    agi = IntegerField(label="AGI")
+    sor = IntegerField(label="SOR")
+
+    conhecimento = IntegerField(label="CONHECIMENTO")
+    disciplina = IntegerField(label="DISCIPLINA")
+    empatia = IntegerField(label="EMPATIA")
+    charma = IntegerField(label="CHARME")
+    expressao = IntegerField(label="EXPRESSÃO")
+    coragem = IntegerField(label="CORAGEM")
+
+    magias = FieldList(FormField(MagiaGDC), label="MAGIAS")
+
 
 class ItemForm(FlaskForm):
     nome = TextAreaField(label="NOME/DESCRICAO")
@@ -59,6 +93,7 @@ class PersonagemFichaGDC(FlaskForm):
 class FichaGrimorioDoCoracao(FlaskForm):
 
     ficha_personagem = FormField(PersonagemFichaGDC)
+    ficha_personas = FieldList(FormField(PersonaFichaGDC), label="PERSONAS", min_entries=7)
     classe = StringField(label="CLASSE")
     nivel = IntegerField(label="NÍVEL")
     arcana = StringField(label="ARCANA")
