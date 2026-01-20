@@ -5,7 +5,7 @@
 </style>
 {% endblock %}
 
-{% block titulo %} Calculadora {% endblock %}
+{% block titulo %} Ficha {% endblock %}
 
 {% block tela %} Grimório do coração {% endblock %}
 
@@ -15,11 +15,13 @@
     {{ form.csrf_token }}
 
     <div class="field">
-        {{ form.btn_salvar(class="button is-success") }}
+        <div class="control">
+            {{ form.btn_salvar(class="button is-success") }}
+        </div>
     </div>
 
     <div class="field is-grouped">
-        <div class="control is-expanded">
+        <div class="control">
             <div class="file has-name">
                 <label class="file-label">
                     {{ form.file_importar(class="file-input", accept=".pk", onchange="mudarNome()") }}
@@ -27,7 +29,7 @@
                         <span class="file-label"> Escolha o arquivo </span>
                     </span>
                     <span class="file-name">
-                        Escolha o arquivo .pk ....
+                        Arquivo .pk 
                     </span>
                 </label>
             </div>
@@ -176,7 +178,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_con_titulo }}
                                 </div>
                             </td>
@@ -191,7 +193,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_dis_titulo }}
                                 </div>
                             </td>
@@ -206,7 +208,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_emp_titulo }}
                                 </div>
                             </td>
@@ -221,7 +223,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_cha_titulo }}
                                 </div>
                             </td>
@@ -236,7 +238,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_exp_titulo }}
                                 </div>
                             </td>
@@ -251,7 +253,7 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="select">
+                                <div class="select" style="width: 100px;">
                                     {{ form.hab_soc_cor_titulo }}
                                 </div>
                             </td>
@@ -285,7 +287,7 @@
             <div class="column">
                 <div class="field is-grouped">
 
-                    <div class="control">
+                    <div class="control is-expanded">
                         {{ form.ficha_personas[0].nome.label(class="label") }}
                         {{ form.ficha_personas[0].nome(class="input", onchange="espelharCampo(this)") }}
                     </div>
@@ -334,7 +336,7 @@
 
                 </div>
 
-                <div class="field ">
+                <div class="field">
                     <b> Resistencias </b>
                     <div class="fixed-grid has-3-cols">
                         <div class="grid">
@@ -371,7 +373,7 @@
                         {{ form.arma_alc(class="input") }}
                     </div>
 
-                    <div class="control">
+                    <div class="control is-expanded">
                         {{ form.arma_efe.label(class="label") }}
                         {{ form.arma_efe(class="input") }}
                     </div>
@@ -388,7 +390,7 @@
                         {{ form.armadura_rd(class="input") }}
                     </div>
 
-                    <div class="control">
+                    <div class="control is-expanded">
                         {{ form.armadura_efe.label(class="label") }}
                         {{ form.armadura_efe(class="input") }}
                     </div>
@@ -400,7 +402,7 @@
                         {{ form.acessorio(class="input") }}
                     </div>
 
-                    <div class="control">
+                    <div class="control is-expanded">
                         {{ form.acessorio_efe.label(class="label") }}
                         {{ form.acessorio_efe(class="input") }}
                     </div>
@@ -492,136 +494,129 @@
 
         <hr>
 
-        <div class="columns">
-            <div class="column is-two-thirds">
-                <div class="field is-grouped">
-                    <div class="control is-expanded">
-                        {{ form.ficha_personagem.atq_secudario.label(class="label") }}
-                        {{ form.ficha_personagem.atq_secudario(class="input") }}
-                    </div>
-
-                    <div class="control is-expanded">
-                        {{ form.ficha_personagem.atq_dano.label(class="label") }}
-                        {{ form.ficha_personagem.atq_dano(class="input") }}
-                    </div>
-
-                    <div class="control is-expanded">
-                        {{ form.ficha_personagem.atq_alc.label(class="label") }}
-                        {{ form.ficha_personagem.atq_alc(class="input") }}
-                    </div>
-
-                    <div class="control is-expanded">
-                        {{ form.ficha_personagem.atq_efe.label(class="label") }}
-                        {{ form.ficha_personagem.atq_efe(class="input") }}
-                    </div>
-                </div>
-
-                <div class="field">
-                    <div class="control">
-                        {{ form.ficha_personagem.equip_misto.label(class="label") }}
-                        {{ form.ficha_personagem.equip_misto(class="textarea") }}
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="field">
-                    <b>Personas</b>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    ARCANA
-                                </th>
-                                <th>
-                                    NOME
-                                </th>
-                                <th>
-                                    Nv.
-                                </th>
-                                <th>
-
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for p in form.ficha_personas %}
-                            <tr>
-                                <td width="10%">
-                                    <div class="select">
-                                        {{ p.arcana(onchange="espelharCampo(this)") }}
-                                    </div>
-                                </td>
-                                <td width="40%">
-                                    {{ p.nome(class="input", onchange="espelharCampo(this)") }}
-                                </td>
-                                <td width="20%">
-                                    {{ p.nivel(class="input", onchange="espelharCampo(this)") }}
-                                </td>
-                                <td>
-                                    <button type="button" class="button is-info js-modal-trigger" data-target="persona-{{ loop.index-1 }}">
-                                        Editar
-                                    </button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <hr>
-
-                <div class="field">
-                    <table class="table">
-                        <thead>
-                            <th>
-                                Nome/Descrição
-                            </th>
-                            <th>
-                                Qtd
-                            </th>
-                        </thead>
-                        <tbody>
-                            {% for i in form.ficha_personagem.itens %}
-                            <tr>
-                                <td width="85%">
-                                    {{ i.nome(class="input") }}
-                                </td>
-                                <td>
-                                    {{ i.qtd(class="input") }}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-
-                <hr>
-
-                <div class="field">
-                    <div class="control">
-                        {{ form.ficha_personagem.notas.label(class="label") }}
-                        {{ form.ficha_personagem.notas(class="textarea") }}
-                    </div>
-                </div>
+        <div class="field is-grouped">
+            <div class="control is-expanded">
+                {{ form.ficha_personagem.atq_secudario.label(class="label") }}
+                {{ form.ficha_personagem.atq_secudario(class="input") }}
             </div>
 
+            <div class="control is-expanded">
+                {{ form.ficha_personagem.atq_dano.label(class="label") }}
+                {{ form.ficha_personagem.atq_dano(class="input") }}
+            </div>
+
+            <div class="control is-expanded">
+                {{ form.ficha_personagem.atq_alc.label(class="label") }}
+                {{ form.ficha_personagem.atq_alc(class="input") }}
+            </div>
+
+            <div class="control is-expanded">
+                {{ form.ficha_personagem.atq_efe.label(class="label") }}
+                {{ form.ficha_personagem.atq_efe(class="input") }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                {{ form.ficha_personagem.equip_misto.label(class="label") }}
+                {{ form.ficha_personagem.equip_misto(class="textarea") }}
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="field">
+            <b>Personas</b>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            ARC.
+                        </th>
+                        <th>
+                            NOME
+                        </th>
+                        <th>
+                            Nv.
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in form.ficha_personas %}
+                    <tr>
+                        <td>
+                            <div class="select is-small" style="width: 100px;">
+                                {{ p.arcana(onchange="espelharCampo(this)") }}
+                            </div>
+                        </td>
+                        <td>
+                            {{ p.nome(class="input", onchange="espelharCampo(this)") }}
+                        </td>
+                        <td>
+                            {{ p.nivel(class="input", onchange="espelharCampo(this)") }}
+                        </td>
+                        <td>
+                            <button type="button" class="button is-info js-modal-trigger" data-target="persona-{{ loop.index-1 }}">
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="field">
+            <table class="table">
+                <thead>
+                    <th>
+                        Nome/Descrição
+                    </th>
+                    <th>
+                        Qtd
+                    </th>
+                </thead>
+                <tbody>
+                    {% for i in form.ficha_personagem.itens %}
+                    <tr>
+                        <td width="75%">
+                            {{ i.nome(class="input") }}
+                        </td>
+                        <td>
+                            {{ i.qtd(class="input") }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="columns">
             <div class="column">
                 <div class="field">
                     <b>Feitos</b>
-
+    
                     <div class="fixed-grid">
                         <div class="grid">
                             {% for f in form.ficha_personagem.feitos %}
                             <div class="cell">
                                 {{ form.ficha_personagem.nome_feitos[loop.index-1] }}
-                                {{ f(class="input") }}
+                                {{ f(class="textarea", rows=5) }}
                             </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="column">
                 <div class="field">
                     <table class="table">
                         <thead>
@@ -651,6 +646,15 @@
                 </div>
             </div>
         </div>
+
+        <hr>
+
+        <div class="field">
+            <div class="control">
+                {{ form.ficha_personagem.notas.label(class="label") }}
+                {{ form.ficha_personagem.notas(class="textarea") }}
+            </div>
+        </div>
     </div>
 
     {% for p in form.ficha_personas %}
@@ -666,17 +670,19 @@
                     <hr>
 
                     <div class="field is-grouped">
-                        <div class="control">
+                        <div class="control is-expanded">
                             {{ p.nome.label(class="label") }}
                             {{ p.nome(class="input", onchange="espelharCampo(this)") }}
                         </div>
 
-                        <div class="control">
+                        <div class="control is-expanded">
                             {{ p.arcana.label(class="label") }}
                             <div class="select">
                                 {{ p.arcana(onchange="espelharCampo(this)") }}
                             </div>
                         </div>
+                    </div>
+                    <div class="field is-grouped">
 
                         <div class="control is-expanded">
                             {{ p.nivel.label(class="label") }}

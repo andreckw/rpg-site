@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, make_response
+from flask import Flask, render_template, request, send_file, make_response, session
 from flask_wtf.csrf import CSRFProtect
 from forms.personagem_form import PersonagemForm
 from forms.fichas.grimorio_do_coracao_form import FichaGrimorioDoCoracao
@@ -38,13 +38,12 @@ def personagem():
 def ficha_grimorio_do_coracao():
     form = FichaGrimorioDoCoracao()
     
-    if (request.cookies.get("ficha_gdc", "") != ""):
-        path = request.cookies.get("ficha_gdc")
+    path = request.cookies.get("ficha_gdc", "")
+    if (path != ""):
         if os.path.exists(path):
             with open(path, "r") as f:
                 dados = json.load(f)
                 form = FichaGrimorioDoCoracao(data=dados, formdata=None)
-            os.remove(path)
 
         
 
@@ -60,6 +59,8 @@ def ficha_grimorio_do_coracao():
                 f.write(file)
                 f.close()
                 response.set_cookie("ficha_gdc", f.name)
+            if path != "":
+                os.remove(path=path)
 
             return response
         
