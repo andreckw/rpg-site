@@ -363,6 +363,9 @@
                         {{ form.arma_nome(class="input") }}
                     </div>
 
+                </div>
+                
+                <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.arma_dano.label(class="label") }}
                         {{ form.arma_dano(class="input") }}
@@ -372,12 +375,16 @@
                         {{ form.arma_alc.label(class="label") }}
                         {{ form.arma_alc(class="input") }}
                     </div>
+                </div>
 
+                <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.arma_efe.label(class="label") }}
-                        {{ form.arma_efe(class="input") }}
+                        {{ form.arma_efe(class="textarea", rows=2) }}
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="field is-grouped">
                     <div class="control is-expanded">
@@ -389,22 +396,28 @@
                         {{ form.armadura_rd.label(class="label") }}
                         {{ form.armadura_rd(class="input") }}
                     </div>
+                </div>
 
-                    <div class="control is-expanded">
+                <div class="field">
+                    <div class="control">
                         {{ form.armadura_efe.label(class="label") }}
-                        {{ form.armadura_efe(class="input") }}
+                        {{ form.armadura_efe(class="textarea", rows=2) }}
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.acessorio.label(class="label") }}
                         {{ form.acessorio(class="input") }}
                     </div>
+                </div>
 
+                <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.acessorio_efe.label(class="label") }}
-                        {{ form.acessorio_efe(class="input") }}
+                        {{ form.acessorio_efe(class="textarea", rows=2) }}
                     </div>
                 </div>
 
@@ -525,19 +538,19 @@
 
         <hr>
 
-        <div class="field">
+        <div class="table-container">
             <b>Personas</b>
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            ARC.
+                            ARCANA
                         </th>
                         <th>
                             NOME
                         </th>
                         <th>
-                            Nv.
+                            NIVEL
                         </th>
                         <th>
 
@@ -548,7 +561,7 @@
                     {% for p in form.ficha_personas %}
                     <tr>
                         <td>
-                            <div class="select is-small" style="width: 100px;">
+                            <div class="select">
                                 {{ p.arcana(onchange="espelharCampo(this)") }}
                             </div>
                         </td>
@@ -734,7 +747,10 @@
                                         <label for="" class="label">
                                             {{ form.nomes_resistencias[loop.index-1] }}
                                         </label>
-                                        {{ r(class="input", onchange="espelharCampo(this)") }}
+
+                                        <div class="select">
+                                            {{ r(onchange="espelharCampo(this)") }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -836,7 +852,9 @@
 
             campos[i].setAttribute("value", ev.value);
 
-            campos[i].innerHtml = ev.innerHtml;
+            if (ev.tagName == "SELECT") {
+                campos[i].options.selectedIndex = ev.options.selectedIndex;
+            }
 
         };
     }
