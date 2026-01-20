@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 from flask_wtf.csrf import CSRFProtect
 from forms.personagem_form import PersonagemForm
-from forms.ficha_grimorio_do_coracao_form import FichaGrimorioDoCoracao
+from forms.fichas.grimorio_do_coracao_form import FichaGrimorioDoCoracao
 from models.personagem_model import criarpersonagem
 import json
+from io import BytesIO
 import tempfile
 import os
 import datetime
@@ -36,6 +37,36 @@ def personagem():
 @app.route("/ficha/grimoriodocoracao", methods=["GET", "POST"])
 def ficha_grimorio_do_coracao():
     form = FichaGrimorioDoCoracao()
+    
+    if (request.cookies.get("ficha_gdc", "") != ""):
+        path = request.cookies.get("ficha_gdc")
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                dados = json.load(f)
+                form = FichaGrimorioDoCoracao(data=dados, formdata=None)
+            os.remove(path)
+
+        
+
+    if form.is_submitted():
+        if (form.btn_salvar.data):
+            file = json.dumps(form.to_dict(), indent=4)
+            
+            buffer = BytesIO(file.encode('utf-8'))
+            buffer.seek(0)
+            response = make_response(send_file(buffer, as_attachment=True, download_name="ficha_gdc.pk"))
+
+            with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix="ficha_gdc.pk") as f:
+                f.write(file)
+                f.close()
+                response.set_cookie("ficha_gdc", f.name)
+
+            return response
+        
+        if (form.btn_importar.data):
+            file = json.load(form.file_importar.data)
+            form = FichaGrimorioDoCoracao(formdata=None, data=file)
+            response = make_response(render_template("/views/fichas/grimorio_do_coracao.html", form=form))
 
     return render_template("/views/fichas/grimorio_do_coracao.html", form=form)
 

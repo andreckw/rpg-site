@@ -1,27 +1,38 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, TextAreaField, FloatField, FileField, BooleanField
+from forms.fichas.ficha_form import FichaForm
+from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, TextAreaField, FloatField, FileField, BooleanField, SubmitField
+import base64
 
-class MagiaGDC(FlaskForm):
+def arcanas():
+    return ["0 - O Tolo", "I - O Mago", "II - A Sacerdotisa", "III - A Imperatriz", "IV - O Imperado", "V - Hierofante", "VI - Os Amantes", "VII - A Carruagem", "VIII - A Justiça", "IX - O Eremita", "X - A Fortuna", "XI - A Força", "XII - O Enforcado", "XIII - A Morte", "XIV - A Temperança", "XV - O Demônio", "XVI - A Torre", "XVII - A Estrela", "XVIII - A Lua", "XIX - O Sol", "XX - Julgamento/Aeon", "XXI - O Mundo"]
+
+def tipos():
+    return ["Nenhum", "Físico", "Fogo", "Gelo", "Vento", "Raio", "Nuclear", "Psicocinese", "Luz", "Trevas", "Onipotente", "Buff", "Debuff", "Cura", "Status", "Intel"]
+
+def afinidades():
+    return ["Neutro", "Fraco", "Resiste", "Anula", "Reflete", "Drena"]
+
+class MagiaGDC(FichaForm):
     magia = StringField(label="MAGIA")
-    tipo = StringField(label="TIPO")
+    tipo = SelectField(choices=tipos(), label="TIPO")
     cat = StringField(label="CAT.")
     tier = StringField(label="TIER")
     alvo = StringField(label="ALVO")
-    efeito = TextAreaField(label="ALVO")
+    efeito = TextAreaField(label="EFEITO")
     usos = IntegerField(label="USOS")
     usos_max = IntegerField(label="USOS MAX")
     repr = IntegerField(label="REPR")
 
-class PersonaFichaGDC(FlaskForm):
+
+class PersonaFichaGDC(FichaForm):
     nome = StringField(label="NOME")
-    arcana = StringField(label="ARCANA")
+    arcana = SelectField(label="ARCANA", choices=arcanas())
     nivel = IntegerField(label="Nv.")
     pm = IntegerField(label="PM")
 
     hab_natural = TextAreaField(label="HAB. NATURAL")
 
-    tipos = FieldList(StringField(), label="Tipos", min_entries=4, max_entries=4)
-    res = FieldList(StringField(), label="RESISTENCIAS", min_entries=11, max_entries=11)
+    tipos = FieldList(SelectField(choices=tipos()), label="Tipos", min_entries=4, max_entries=4)
+    res = FieldList(SelectField(choices=afinidades()), label="RESISTENCIAS", min_entries=11, max_entries=11)
 
     forca = IntegerField(label="FOR")
     tec = IntegerField(label="TEC")
@@ -37,18 +48,23 @@ class PersonaFichaGDC(FlaskForm):
     expressao = IntegerField(label="EXPRESSÃO")
     coragem = IntegerField(label="CORAGEM")
 
-    magias = FieldList(FormField(MagiaGDC), label="MAGIAS")
+    magias = FieldList(FormField(MagiaGDC), label="MAGIAS", min_entries=8)
+
+    notas = TextAreaField(label="NOTAS")
 
 
-class ItemForm(FlaskForm):
+
+class ItemForm(FichaForm):
     nome = TextAreaField(label="NOME/DESCRICAO")
     qtd = IntegerField(label="QTD")
 
-class ConfidentsForm(FlaskForm):
+
+class ConfidentsForm(FichaForm):
     nome = StringField(label="NOME")
     rank = IntegerField(label="RANK")
 
-class PersonagemFichaGDC(FlaskForm):
+
+class PersonagemFichaGDC(FichaForm):
 
     retrato = FileField(label="Retrato")
     
@@ -60,14 +76,12 @@ class PersonagemFichaGDC(FlaskForm):
     pr_bloco = FloatField(label="PR/BLOCO")
     blocos_trab = FieldList(BooleanField(), min_entries=7, max_entries=7)
     
-    atq_secudario = StringField(label="ATAQUE SECUNDÁRIO")
+    atq_secudario = StringField(label="ATQ.SECUNDÁRIO")
     atq_dano = StringField(label="DANO")
     atq_alc = IntegerField(label="ALC")
     atq_efe = StringField(label="EFEITO")
     
     equip_misto = TextAreaField(label="EQUIP. MISTO")
-
-    personas = FieldList(FormField(PersonaFichaGDC),label="PERSONAS", min_entries=7)
 
     itens = FieldList(FormField(ItemForm), label="ITENS", min_entries=9)
 
@@ -87,16 +101,18 @@ class PersonagemFichaGDC(FlaskForm):
     
     @property
     def nome_confidents(self):
-        return ["O Louco","O Mago","A Sacerdotisa","A Imperatriz","O Imperador","O Hierofante","Os Amantes","A Carruagem","A Justiça","O Eremita", "A Fortuna","A Força","O Enforcado","A Morte","A Temperança","O Diabo","A Torre","A Estrela","A Lua","O Sol","O Julgamento","O Mundo"]
+        return arcanas()
 
 
-class FichaGrimorioDoCoracao(FlaskForm):
+
+class FichaGrimorioDoCoracao(FichaForm):
 
     ficha_personagem = FormField(PersonagemFichaGDC)
     ficha_personas = FieldList(FormField(PersonaFichaGDC), label="PERSONAS", min_entries=7)
-    classe = StringField(label="CLASSE")
+    classe = SelectField(label="CLASSE", choices=["Emergentes", "Cartas-Coringa", "Sombras", "Surpressores", "Tochas"])
+
     nivel = IntegerField(label="NÍVEL")
-    arcana = StringField(label="ARCANA")
+    arcana = SelectField(label="ARCANA", choices=arcanas())
     jogador = StringField(label="JOGADOR")
 
     forca = IntegerField(label="FORÇA (FOR)")
@@ -138,13 +154,7 @@ class FichaGrimorioDoCoracao(FlaskForm):
     pts_aspecto = IntegerField(label="PTS ASPEC.")
     aspectos = TextAreaField(label="ASPECTOS")
 
-    persona_nome = StringField(label="NOME")
-    persona_nv = IntegerField(label="Nv.")
-    persona_pm = IntegerField(label="PM") #Pontos de magia
     persona_conv = StringField(label="CONVICÇÃO")
-    persona_hab_natural = TextAreaField(label="HAB. NATURAL")
-    persona_tipos = FieldList(StringField(), label="Tipos", min_entries=4, max_entries=4)
-    persona_res = FieldList(StringField(), label="RESISTENCIAS", min_entries=11, max_entries=11)
 
     arma_nome = StringField(label="ARMA")
     arma_dano = StringField(label="DANO")
@@ -158,6 +168,22 @@ class FichaGrimorioDoCoracao(FlaskForm):
     acessorio = StringField(label="ACESSÓRIO")
     acessorio_efe = TextAreaField(label="EFEITO")
 
+    btn_salvar = SubmitField(label="Salvar")
+
+    file_importar = FileField(label="Importar")
+    btn_importar = SubmitField(label="Importar")
+
     @property
     def nomes_resistencias(self):
         return ["Fisico", "Fogo", "Gelo", "Vento", "Raio", "Nuclear", "Psicocinese", "Luz", "Trevas", "Status", "Intel"]
+
+    def to_dict(self):
+        dados = {}
+        for k, v in self.data.items():
+            dados[k] = v
+        
+        dados["ficha_personagem"]["retrato"] = base64.b64encode(self.ficha_personagem.retrato.data.read()).decode("utf-8")
+
+        dados["file_importar"] = base64.b64encode(self.file_importar.data.read()).decode("utf-8")
+        return dados
+
