@@ -11,6 +11,7 @@ import datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "61aecb89-f2b8-46b9-a85a-c05db0dd2e06"
+app.config['WTF_CSRF_TIME_LIMIT'] = None
 
 csrf = CSRFProtect(app)
 csrf.init_app(app)
@@ -39,9 +40,13 @@ def ficha_grimorio_do_coracao():
     form = FichaGrimorioDoCoracao()
     
     path = request.cookies.get("ficha_gdc", "")
-    if (path != ""):
-        if os.path.exists(path):
-            with open(path, "r") as f:
+    path_importar = path
+    if form.btn_importar.data or form.btn_salvar.data or form.btn_limpar.data:
+        path_importar = ""
+
+    if path_importar != "":
+        if os.path.exists(path_importar):
+            with open(path_importar, "r") as f:
                 dados = json.load(f)
                 form = FichaGrimorioDoCoracao(data=dados, formdata=None)
 
@@ -59,15 +64,21 @@ def ficha_grimorio_do_coracao():
                 f.write(file)
                 f.close()
                 response.set_cookie("ficha_gdc", f.name)
-            if path != "":
+
+            if path != "" and os.path.exists(path=path):
                 os.remove(path=path)
 
             return response
         
         if (form.btn_importar.data):
-            file = json.load(form.file_importar.data)
-            form = FichaGrimorioDoCoracao(formdata=None, data=file)
-            response = make_response(render_template("/views/fichas/grimorio_do_coracao.html", form=form))
+            if form.file_importar.data:
+                file = json.load(form.file_importar.data)
+                form = FichaGrimorioDoCoracao(formdata=None, data=file)
+        
+        if (form.btn_limpar.data):
+            form = FichaGrimorioDoCoracao(formdata=None, data=None)
+            if path != "" and os.path.exists(path=path):
+                os.remove(path=path)
 
     return render_template("/views/fichas/grimorio_do_coracao.html", form=form)
 

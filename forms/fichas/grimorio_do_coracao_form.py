@@ -1,9 +1,11 @@
 from forms.fichas.ficha_form import FichaForm
 from wtforms import StringField, IntegerField, SelectField, FieldList, FormField, TextAreaField, FloatField, FileField, BooleanField, SubmitField
+from wtforms.validators import Optional
+from flask_wtf.file import FileAllowed
 import base64
 
 def arcanas():
-    return ["0 - O Tolo", "I - O Mago", "II - A Sacerdotisa", "III - A Imperatriz", "IV - O Imperado", "V - Hierofante", "VI - Os Amantes", "VII - A Carruagem", "VIII - A Justiça", "IX - O Eremita", "X - A Fortuna", "XI - A Força", "XII - O Enforcado", "XIII - A Morte", "XIV - A Temperança", "XV - O Demônio", "XVI - A Torre", "XVII - A Estrela", "XVIII - A Lua", "XIX - O Sol", "XX - Julgamento/Aeon", "XXI - O Mundo"]
+    return ["0 - O Tolo", "I - O Mago", "II - A Sacerdotisa", "III - A Imperatriz", "IV - O Imperador", "V - Hierofante", "VI - Os Amantes", "VII - A Carruagem", "VIII - A Justiça", "IX - O Eremita", "X - A Fortuna", "XI - A Força", "XII - O Enforcado", "XIII - A Morte", "XIV - A Temperança", "XV - O Demônio", "XVI - A Torre", "XVII - A Estrela", "XVIII - A Lua", "XIX - O Sol", "XX - Julgamento/Aeon", "XXI - O Mundo"]
 
 def tipos():
     return ["Nenhum", "Físico", "Fogo", "Gelo", "Vento", "Raio", "Nuclear", "Psicocinese", "Luz", "Trevas", "Onipotente", "Buff", "Debuff", "Cura", "Status", "Intel"]
@@ -169,9 +171,11 @@ class FichaGrimorioDoCoracao(FichaForm):
     acessorio_efe = TextAreaField(label="EFEITO")
 
     btn_salvar = SubmitField(label="Salvar")
+    btn_limpar = SubmitField(label="Limpar campos")
 
-    file_importar = FileField(label="Importar")
+    file_importar = FileField(label="Importar", validators=[FileAllowed([".pk"], message="Apenas arquivos .pk"), Optional()])
     btn_importar = SubmitField(label="Importar")
+
 
     @property
     def nomes_resistencias(self):
@@ -180,10 +184,10 @@ class FichaGrimorioDoCoracao(FichaForm):
     def to_dict(self):
         dados = {}
         for k, v in self.data.items():
-            dados[k] = v
+            if (k != "btn_salvar") and (k != "btn_importar") and (k != "file_importar") and (k != "csrf_token"):
+                dados[k] = v
         
         dados["ficha_personagem"]["retrato"] = base64.b64encode(self.ficha_personagem.retrato.data.read()).decode("utf-8")
 
-        dados["file_importar"] = base64.b64encode(self.file_importar.data.read()).decode("utf-8")
         return dados
 

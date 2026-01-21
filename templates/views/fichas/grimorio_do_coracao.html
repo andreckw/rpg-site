@@ -14,9 +14,12 @@
 <form action="#" method="post" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <div class="field">
+    <div class="field is-grouped">
         <div class="control">
             {{ form.btn_salvar(class="button is-success") }}
+        </div>
+        <div class="control">
+            {{ form.btn_limpar(class="button is-warning") }}
         </div>
     </div>
 
@@ -29,12 +32,12 @@
                         <span class="file-label"> Escolha o arquivo </span>
                     </span>
                     <span class="file-name">
-                        Arquivo .pk 
+                        Arquivo .pk
                     </span>
                 </label>
             </div>
         </div>
-        
+
         <div class="control is-expanded">
             {{ form.btn_importar(class="button is-success") }}
         </div>
@@ -313,7 +316,8 @@
                 <div class="field">
                     <div class="control">
                         {{ form.ficha_personas[0].hab_natural.label(class="label") }}
-                        {{ form.ficha_personas[0].hab_natural(class="textarea", rows=2, onchange="espelharCampo(this)") }}
+                        {{ form.ficha_personas[0].hab_natural(class="textarea", rows=2, onchange="espelharCampo(this)")
+                        }}
                     </div>
                 </div>
 
@@ -364,7 +368,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="field is-grouped">
                     <div class="control is-expanded">
                         {{ form.arma_dano.label(class="label") }}
@@ -432,7 +436,8 @@
                 <div class="field">
                     <div class="file">
                         <label class="file-label">
-                            {{ form.ficha_personagem.retrato(class="file-input", accept="image/*", onchange="previewImg()") }}
+                            {{ form.ficha_personagem.retrato(class="file-input", accept="image/*",
+                            onchange="previewImg()") }}
                             <span class="file-cta">
                                 <span class="file-label"> Escolha o retrato </span>
                             </span>
@@ -572,7 +577,8 @@
                             {{ p.nivel(class="input", onchange="espelharCampo(this)") }}
                         </td>
                         <td>
-                            <button type="button" class="button is-info js-modal-trigger" data-target="persona-{{ loop.index-1 }}">
+                            <button type="button" class="button is-info js-modal-trigger"
+                                data-target="persona-{{ loop.index-1 }}">
                                 Editar
                             </button>
                         </td>
@@ -615,7 +621,7 @@
             <div class="column">
                 <div class="field">
                     <b>Feitos</b>
-    
+
                     <div class="fixed-grid">
                         <div class="grid">
                             {% for f in form.ficha_personagem.feitos %}
@@ -671,172 +677,172 @@
     </div>
 
     {% for p in form.ficha_personas %}
-        <div class="modal is-large" id="persona-{{ loop.index-1 }}">
-            <div class="modal-background"></div>
+    <div class="modal is-large" id="persona-{{ loop.index-1 }}">
+        <div class="modal-background"></div>
 
-            <div class="modal-content">
-                <div class="box">
-                    <h3 class="is-title title-3">
-                        Persona
-                    </h3>
+        <div class="modal-content">
+            <div class="box">
+                <h3 class="is-title title-3">
+                    Persona
+                </h3>
 
-                    <hr>
+                <hr>
 
-                    <div class="field is-grouped">
-                        <div class="control is-expanded">
-                            {{ p.nome.label(class="label") }}
-                            {{ p.nome(class="input", onchange="espelharCampo(this)") }}
-                        </div>
-
-                        <div class="control is-expanded">
-                            {{ p.arcana.label(class="label") }}
-                            <div class="select">
-                                {{ p.arcana(onchange="espelharCampo(this)") }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-grouped">
-
-                        <div class="control is-expanded">
-                            {{ p.nivel.label(class="label") }}
-                            {{ p.nivel(class="input", onchange="espelharCampo(this)") }}
-                        </div>
-
-                        <div class="control is-expanded">
-                            {{ p.pm.label(class="label") }}
-                            {{ p.pm(class="input", onchange="espelharCampo(this)") }}
-                        </div>
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        {{ p.nome.label(class="label") }}
+                        {{ p.nome(class="input", onchange="espelharCampo(this)") }}
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            {{ p.hab_natural.label(class="label") }}
-                            {{ p.hab_natural(class="textarea", onchange="espelharCampo(this)", rows=2)
-                            }}
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <b>TIPOS</b>
-                    <div class="field">
-
-                        <div class="fixed-grid">
-                            <div class="grid">
-                                {% for t in p.tipos %}
-                                <div class="cell">
-                                    <div class="select">
-                                        {{ t(onchange="espelharCampo(this)") }}
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <hr>
-
-                    <b>RESISTÊNCIAS</b>
-                    <div class="fixed-grid has-3-cols">
-                        <div class="grid">
-                            {% for r in p.res %}
-                            <div class="cell">
-                                <div class="field">
-                                    <div class="control">
-                                        <label for="" class="label">
-                                            {{ form.nomes_resistencias[loop.index-1] }}
-                                        </label>
-
-                                        <div class="select">
-                                            {{ r(onchange="espelharCampo(this)") }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <hr>
-                    <b>MAGIAS</b>
-                    <div class="fixed-grid">
-                        <div class="grid">
-                            {% for m in p.magias %}
-                            <div class="cell">
-                                <div class="box">
-                                    <div class="field">
-                                        <div class="control">
-                                            {{ m.magia.label(class="label") }}
-                                            {{ m.magia(class="input") }}
-                                        </div>
-                                    </div>
-
-                                    <div class="field is-grouped">
-                                        <div class="control is-expanded">
-                                            {{ m.tipo.label(class="label") }}
-                                            {{ m.tipo(class="input") }}
-                                        </div>
-
-                                        <div class="control is-expanded">
-                                            {{ m.cat.label(class="label") }}
-                                            {{ m.cat(class="input") }}
-                                        </div>
-                                    </div>
-
-                                    <div class="field is-grouped">
-                                        <div class="control is-expanded">
-                                            {{ m.tier.label(class="label") }}
-                                            {{ m.tier(class="input") }}
-                                        </div>
-
-                                        <div class="control is-expanded">
-                                            {{ m.alvo.label(class="label") }}
-                                            {{ m.alvo(class="input") }}
-                                        </div>
-                                    </div>
-
-                                    <div class="field is-grouped">
-                                        <div class="control is-expanded">
-                                            {{ m.usos.label(class="label") }}
-                                            {{ m.usos(class="input") }}
-                                        </div>
-
-                                        <div class="control is-expanded">
-                                            {{ m.usos_max.label(class="label") }}
-                                            {{ m.usos_max(class="input") }}
-                                        </div>
-
-                                        <div class="control is-expanded">
-                                            {{ m.repr.label(class="label") }}
-                                            {{ m.repr(class="input") }}
-                                        </div>
-                                    </div>
-
-                                    <div class="field">
-                                        <div class="control">
-                                            {{ m.efeito.label(class="label") }}
-                                            {{ m.efeito(class="textarea", rows=2) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="field">
-                        <div class="control">
-                            {{ p.notas.label(class="label") }}
-                            {{ p.notas(class="textarea", rows=3) }}
+                    <div class="control is-expanded">
+                        {{ p.arcana.label(class="label") }}
+                        <div class="select">
+                            {{ p.arcana(onchange="espelharCampo(this)") }}
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="field is-grouped">
 
-            <button type="button" class="modal-close is-large" aria-label="close"></button>
+                    <div class="control is-expanded">
+                        {{ p.nivel.label(class="label") }}
+                        {{ p.nivel(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+
+                    <div class="control is-expanded">
+                        {{ p.pm.label(class="label") }}
+                        {{ p.pm(class="input", onchange="espelharCampo(this)") }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        {{ p.hab_natural.label(class="label") }}
+                        {{ p.hab_natural(class="textarea", onchange="espelharCampo(this)", rows=2)
+                        }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <b>TIPOS</b>
+                <div class="field">
+
+                    <div class="fixed-grid">
+                        <div class="grid">
+                            {% for t in p.tipos %}
+                            <div class="cell">
+                                <div class="select">
+                                    {{ t(onchange="espelharCampo(this)") }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <b>RESISTÊNCIAS</b>
+                <div class="fixed-grid has-3-cols">
+                    <div class="grid">
+                        {% for r in p.res %}
+                        <div class="cell">
+                            <div class="field">
+                                <div class="control">
+                                    <label for="" class="label">
+                                        {{ form.nomes_resistencias[loop.index-1] }}
+                                    </label>
+
+                                    <div class="select">
+                                        {{ r(onchange="espelharCampo(this)") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+                <b>MAGIAS</b>
+                <div class="fixed-grid">
+                    <div class="grid">
+                        {% for m in p.magias %}
+                        <div class="cell">
+                            <div class="box">
+                                <div class="field">
+                                    <div class="control">
+                                        {{ m.magia.label(class="label") }}
+                                        {{ m.magia(class="input") }}
+                                    </div>
+                                </div>
+
+                                <div class="field is-grouped">
+                                    <div class="control is-expanded">
+                                        {{ m.tipo.label(class="label") }}
+                                        {{ m.tipo(class="input") }}
+                                    </div>
+
+                                    <div class="control is-expanded">
+                                        {{ m.cat.label(class="label") }}
+                                        {{ m.cat(class="input") }}
+                                    </div>
+                                </div>
+
+                                <div class="field is-grouped">
+                                    <div class="control is-expanded">
+                                        {{ m.tier.label(class="label") }}
+                                        {{ m.tier(class="input") }}
+                                    </div>
+
+                                    <div class="control is-expanded">
+                                        {{ m.alvo.label(class="label") }}
+                                        {{ m.alvo(class="input") }}
+                                    </div>
+                                </div>
+
+                                <div class="field is-grouped">
+                                    <div class="control is-expanded">
+                                        {{ m.usos.label(class="label") }}
+                                        {{ m.usos(class="input") }}
+                                    </div>
+
+                                    <div class="control is-expanded">
+                                        {{ m.usos_max.label(class="label") }}
+                                        {{ m.usos_max(class="input") }}
+                                    </div>
+
+                                    <div class="control is-expanded">
+                                        {{ m.repr.label(class="label") }}
+                                        {{ m.repr(class="input") }}
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ m.efeito.label(class="label") }}
+                                        {{ m.efeito(class="textarea", rows=2) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+
+                <div class="field">
+                    <div class="control">
+                        {{ p.notas.label(class="label") }}
+                        {{ p.notas(class="textarea", rows=3) }}
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <button type="button" class="modal-close is-large" aria-label="close"></button>
+    </div>
     {% endfor %}
 
 </form>
@@ -845,6 +851,36 @@
 
 {% block js %}
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const retratoData = '{{ form.ficha_personagem.retrato.data }}';
+
+        if (retratoData != 'None') {
+            try {
+                let input = document.getElementById("ficha_personagem-retrato");
+                let img = document.getElementById("previewToken");
+
+                let byteCharacters = atob(retratoData);
+                let byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                let byteArray = new Uint8Array(byteNumbers);
+                let blob = new Blob([byteArray], { type: 'image/*' });
+
+                let file = new File([blob], "retrato.png", { type: 'image/*' });
+
+                let dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+
+                previewImg();
+
+            } catch (error) {
+                console.error('Erro ao carregar imagem:', error);
+            }
+        }
+    });
+
     function espelharCampo(ev) {
         let campos = document.getElementsByName(ev.name);
 
@@ -854,6 +890,10 @@
 
             if (ev.tagName == "SELECT") {
                 campos[i].options.selectedIndex = ev.options.selectedIndex;
+            }
+
+            if (ev.tagName == "TEXTAREA") {
+                campos[i].innerText = ev.value;
             }
 
         };
